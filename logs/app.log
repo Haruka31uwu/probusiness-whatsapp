@@ -1,0 +1,381 @@
+[2025-07-19T02:14:35.515Z] INFO: 🚀 Iniciando servidor OPTIMIZADO para QR RÁPIDO...
+[2025-07-19T02:14:35.524Z] INFO: No hay sesiones previas para restaurar
+[2025-07-19T02:14:35.525Z] INFO: ⚡ Sistema WhatsApp API OPTIMIZADO iniciado - QR SÚPER RÁPIDO ACTIVADO ⚡
+[2025-07-19T02:14:35.529Z] INFO: ⚡ Servidor OPTIMIZADO escuchando en http://localhost:8083
+[2025-07-19T02:14:35.529Z] INFO: 🏎️ Modo de QR RÁPIDO: ACTIVADO
+[2025-07-19T02:14:35.529Z] INFO: ⏱️ Timeouts optimizados: Inicialización 30s, QR 3min
+[2025-07-19T02:14:35.530Z] INFO: 🖼️ QR optimizado: 256px, margen 1px
+[2025-07-19T02:14:35.533Z] INFO: Procesos Chromium huérfanos terminados
+[2025-07-19T02:14:50.224Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Usando configuración optimizada para QR rápido
+[2025-07-19T02:14:50.225Z] WARN: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+[2025-07-19T02:14:50.226Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión creada en memoria
+[2025-07-19T02:14:50.227Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:15:01.046Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 QR Code recibido
+[2025-07-19T02:15:01.111Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:15:01.113Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:15:01.114Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ QR generado exitosamente - Intento #1
+[2025-07-19T02:15:01.123Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Inicialización completada exitosamente
+[2025-07-19T02:15:17.027Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 Cargando WhatsApp Web: 100% - WhatsApp
+[2025-07-19T02:15:17.027Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:15:17.028Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:15:25.149Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ Autenticado correctamente
+[2025-07-19T02:15:25.149Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:15:25.151Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:15:25.730Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 🚀 Sesión lista y conectada
+[2025-07-19T02:15:25.731Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:15:25.732Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:15:26.736Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:15:26.736Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 Información actualizada - Teléfono: 51912705923
+[2025-07-19T02:15:26.737Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:17:35.536Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:20:35.541Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:23:35.550Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:26:35.555Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:29:35.564Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:32:35.580Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:35:35.594Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:36:45.467Z] INFO: 🚀 Iniciando servidor OPTIMIZADO para QR RÁPIDO...
+[2025-07-19T02:36:45.476Z] INFO: 🔄 Encontradas 1 sesiones para evaluar
+[2025-07-19T02:36:45.476Z] INFO: ✅ Programada para restauración: 981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699
+[2025-07-19T02:36:45.476Z] INFO: ⚡ Restaurando 1 sesiones con configuración OPTIMIZADA...
+[2025-07-19T02:36:45.477Z] INFO: Restaurando sesión OPTIMIZADA: 981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699
+[2025-07-19T02:36:45.478Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Usando configuración optimizada para QR rápido
+[2025-07-19T02:36:45.478Z] WARN: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+[2025-07-19T02:36:45.479Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión creada en memoria
+[2025-07-19T02:36:45.479Z] INFO: ✨ Proceso de restauración OPTIMIZADA completado
+[2025-07-19T02:36:45.480Z] INFO: ⚡ Sistema WhatsApp API OPTIMIZADO iniciado - QR SÚPER RÁPIDO ACTIVADO ⚡
+[2025-07-19T02:36:45.482Z] ERROR: Excepción no capturada: listen EADDRINUSE: address already in use :::8083
+[2025-07-19T02:36:45.486Z] INFO: Procesos Chromium huérfanos terminados
+[2025-07-19T02:37:33.642Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T02:37:42.571Z] INFO: 🚀 Iniciando servidor OPTIMIZADO para QR RÁPIDO...
+[2025-07-19T02:37:42.581Z] INFO: 🔄 Encontradas 1 sesiones para evaluar
+[2025-07-19T02:37:42.581Z] INFO: ✅ Programada para restauración: 981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699
+[2025-07-19T02:37:42.581Z] INFO: ⚡ Restaurando 1 sesiones con configuración OPTIMIZADA...
+[2025-07-19T02:37:42.582Z] INFO: Restaurando sesión OPTIMIZADA: 981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699
+[2025-07-19T02:37:42.582Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Usando configuración optimizada para QR rápido
+[2025-07-19T02:37:42.583Z] WARN: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+[2025-07-19T02:37:42.584Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión creada en memoria
+[2025-07-19T02:37:42.584Z] INFO: ✨ Proceso de restauración OPTIMIZADA completado
+[2025-07-19T02:37:42.584Z] INFO: ⚡ Sistema WhatsApp API OPTIMIZADO iniciado - QR SÚPER RÁPIDO ACTIVADO ⚡
+[2025-07-19T02:37:42.586Z] ERROR: Excepción no capturada: listen EADDRINUSE: address already in use :::8083
+[2025-07-19T02:37:42.590Z] INFO: Procesos Chromium huérfanos terminados
+[2025-07-19T02:37:44.274Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T02:37:45.163Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T02:37:46.223Z] INFO: 🚀 Iniciando servidor OPTIMIZADO para QR RÁPIDO...
+[2025-07-19T02:37:46.233Z] INFO: 🔄 Encontradas 1 sesiones para evaluar
+[2025-07-19T02:37:46.233Z] INFO: ✅ Programada para restauración: 981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699
+[2025-07-19T02:37:46.233Z] INFO: ⚡ Restaurando 1 sesiones con configuración OPTIMIZADA...
+[2025-07-19T02:37:46.233Z] INFO: Restaurando sesión OPTIMIZADA: 981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699
+[2025-07-19T02:37:46.234Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Usando configuración optimizada para QR rápido
+[2025-07-19T02:37:46.235Z] WARN: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+[2025-07-19T02:37:46.236Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión creada en memoria
+[2025-07-19T02:37:46.236Z] INFO: ✨ Proceso de restauración OPTIMIZADA completado
+[2025-07-19T02:37:46.236Z] INFO: ⚡ Sistema WhatsApp API OPTIMIZADO iniciado - QR SÚPER RÁPIDO ACTIVADO ⚡
+[2025-07-19T02:37:46.238Z] INFO: ⚡ Servidor OPTIMIZADO escuchando en http://localhost:8083
+[2025-07-19T02:37:46.239Z] INFO: 🏎️ Modo de QR RÁPIDO: ACTIVADO
+[2025-07-19T02:37:46.239Z] INFO: ⏱️ Timeouts optimizados: Inicialización 30s, QR 3min
+[2025-07-19T02:37:46.239Z] INFO: 🖼️ QR optimizado: 256px, margen 1px
+[2025-07-19T02:37:46.242Z] INFO: Procesos Chromium huérfanos terminados
+[2025-07-19T02:37:51.132Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ Restauración exitosa
+[2025-07-19T02:37:51.440Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 Cargando WhatsApp Web: 100% - WhatsApp
+[2025-07-19T02:37:51.440Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:37:51.443Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:37:52.544Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ Autenticado correctamente
+[2025-07-19T02:37:52.545Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:37:52.546Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:37:53.381Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 🚀 Sesión lista y conectada
+[2025-07-19T02:37:53.382Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:37:53.383Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:37:54.381Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:37:54.382Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 Información actualizada - Teléfono: 51912705923
+[2025-07-19T02:37:54.383Z] DEBUG: Información de sesiones guardada (1 sesiones)
+[2025-07-19T02:38:20.025Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Usando configuración optimizada para QR rápido
+[2025-07-19T02:38:20.025Z] WARN: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+[2025-07-19T02:38:20.025Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Sesión creada en memoria
+[2025-07-19T02:38:20.027Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:38:23.048Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] 📱 QR Code recibido
+[2025-07-19T02:38:23.123Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:38:23.125Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:38:23.125Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] ✅ QR generado exitosamente - Intento #1
+[2025-07-19T02:38:23.133Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Inicialización completada exitosamente
+[2025-07-19T02:39:22.955Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] 📱 QR Code recibido
+[2025-07-19T02:39:22.975Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:39:22.977Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:39:22.977Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] ✅ QR generado exitosamente - Intento #2
+[2025-07-19T02:39:42.958Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] 📱 QR Code recibido
+[2025-07-19T02:39:42.978Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:39:42.979Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:39:42.979Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] ✅ QR generado exitosamente - Intento #3
+[2025-07-19T02:40:02.966Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] 📱 QR Code recibido
+[2025-07-19T02:40:02.975Z] WARN: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] 🔌 Desconectado: Max qrcode retries reached
+[2025-07-19T02:40:02.975Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Intentando reconexión automática...
+[2025-07-19T02:40:02.975Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:40:02.983Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:40:02.984Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:40:02.984Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] ✅ QR generado exitosamente - Intento #4
+[2025-07-19T02:40:46.255Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:43:20.030Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] ✅ QR disponible, extendiendo timeout de sesión
+[2025-07-19T02:43:46.255Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:46:46.260Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:49:46.262Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:51:15.786Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ Autenticado correctamente
+[2025-07-19T02:51:15.786Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:51:15.787Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:51:15.788Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ Autenticado correctamente
+[2025-07-19T02:51:15.788Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:51:15.795Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:51:16.455Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 🚀 Sesión lista y conectada
+[2025-07-19T02:51:16.455Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:51:16.456Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:51:16.458Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 🚀 Sesión lista y conectada
+[2025-07-19T02:51:16.458Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:51:16.465Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:51:17.471Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:51:17.472Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 Información actualizada - Teléfono: 51912705923
+[2025-07-19T02:51:17.473Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:51:17.538Z] WARN: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 🔌 Desconectado: LOGOUT
+[2025-07-19T02:51:17.538Z] WARN: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Desconexión crítica: LOGOUT
+[2025-07-19T02:51:17.538Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:51:17.540Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:51:22.057Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 QR Code recibido
+[2025-07-19T02:51:22.070Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:51:22.071Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:51:22.072Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ QR generado exitosamente - Intento #1
+[2025-07-19T02:52:21.934Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 QR Code recibido
+[2025-07-19T02:52:21.953Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:52:21.954Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:52:21.954Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ QR generado exitosamente - Intento #2
+[2025-07-19T02:52:41.944Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 QR Code recibido
+[2025-07-19T02:52:41.963Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:52:41.964Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:52:41.964Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ QR generado exitosamente - Intento #3
+[2025-07-19T02:52:46.275Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:53:01.956Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 📱 QR Code recibido
+[2025-07-19T02:53:01.966Z] WARN: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] 🔌 Desconectado: Max qrcode retries reached
+[2025-07-19T02:53:01.966Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Intentando reconexión automática...
+[2025-07-19T02:53:01.966Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:53:01.975Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:53:01.977Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:53:01.977Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ✅ QR generado exitosamente - Intento #4
+[2025-07-19T02:53:20.039Z] INFO: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] ⏰ Timeout de escaneo de QR (10 minutos adicionales)
+[2025-07-19T02:53:20.039Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T02:53:20.041Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:55:46.277Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T02:58:46.278Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:01:46.285Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:03:01.989Z] INFO: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] ⏰ QR no escaneado en 10 minutos, mantener sesión activa
+[2025-07-19T03:03:01.989Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T03:03:01.990Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:04:46.285Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:07:46.288Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:10:46.303Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:13:46.316Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:16:46.330Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:19:46.346Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:22:46.360Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:25:46.374Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:28:46.388Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:31:46.392Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:34:46.399Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:37:46.242Z] INFO: 📱 [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] QR activo de 34 minutos - MANTENIENDO sesión
+[2025-07-19T03:37:46.243Z] INFO: 📱 [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] QR activo de 44 minutos - MANTENIENDO sesión
+[2025-07-19T03:37:46.399Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:40:46.407Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:43:46.418Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:46:46.427Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:49:46.434Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:52:46.437Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:55:46.442Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T03:58:46.451Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:01:46.460Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:04:46.473Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:07:46.257Z] INFO: 📱 [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] QR activo de 64 minutos - MANTENIENDO sesión
+[2025-07-19T04:07:46.257Z] INFO: 📱 [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] QR activo de 74 minutos - MANTENIENDO sesión
+[2025-07-19T04:07:46.476Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:10:46.476Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:13:46.487Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:16:46.500Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:19:46.515Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:20:01.542Z] INFO: 🚀 Iniciando servidor OPTIMIZADO para QR RÁPIDO...
+[2025-07-19T04:20:01.552Z] INFO: 🔄 Encontradas 2 sesiones para evaluar
+[2025-07-19T04:20:01.552Z] INFO: 🗑️ Programada para eliminación: ef223ee8-410a-4e08-bfd2-ddd3327d6dd7
+[2025-07-19T04:20:01.552Z] INFO: 🧹 Limpiando 1 sesiones automáticamente...
+[2025-07-19T04:20:01.552Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Iniciando limpieza nuclear
+[2025-07-19T04:20:01.553Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Iniciando limpieza de recursos...
+[2025-07-19T04:20:01.553Z] INFO: ⚡ Sistema WhatsApp API OPTIMIZADO iniciado - QR SÚPER RÁPIDO ACTIVADO ⚡
+[2025-07-19T04:20:01.558Z] INFO: Procesos Chromium huérfanos terminados
+[2025-07-19T04:20:02.560Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Directorio eliminado: C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\.wwebjs_auth\session-ef223ee8-410a-4e08-bfd2-ddd3327d6dd7
+[2025-07-19T04:20:02.588Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Directorio eliminado: /tmp/chrome-profile-ef223ee8-410a-4e08-bfd2-ddd3327d6dd7
+[2025-07-19T04:20:04.107Z] INFO: 🗑️ Eliminada: ef223ee8-410a-4e08-bfd2-ddd3327d6dd7
+[2025-07-19T04:20:04.108Z] INFO: ✨ Proceso de restauración OPTIMIZADA completado
+[2025-07-19T04:20:04.110Z] ERROR: Excepción no capturada: listen EADDRINUSE: address already in use :::8083
+[2025-07-19T04:20:27.571Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T04:20:27.574Z] DEBUG: Información de sesiones guardada (0 sesiones)
+[2025-07-19T04:20:27.574Z] INFO: Limpiando todas las sesiones...
+[2025-07-19T04:20:27.575Z] INFO: ✅ Cierre optimizado completado
+[2025-07-19T04:20:27.715Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T04:20:27.716Z] DEBUG: Información de sesiones guardada (0 sesiones)
+[2025-07-19T04:20:27.717Z] INFO: Limpiando todas las sesiones...
+[2025-07-19T04:20:27.717Z] INFO: ✅ Cierre optimizado completado
+[2025-07-19T04:22:46.523Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:25:46.529Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:28:46.531Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:31:46.543Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:33:17.834Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T04:33:17.834Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T04:33:17.834Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Sesión actualizada (SIN destruir cliente)
+[2025-07-19T04:33:17.836Z] DEBUG: Información de sesiones guardada (2 sesiones)
+[2025-07-19T04:33:17.836Z] INFO: Limpiando todas las sesiones...
+[2025-07-19T04:33:17.836Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Iniciando limpieza de recursos...
+[2025-07-19T04:33:17.837Z] DEBUG: [981fbcab-fb1f-4f48-b9c7-b2b1ec3fb699] Cliente ya cerrado o inválido, omitiendo destrucción
+[2025-07-19T04:33:17.837Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Iniciando limpieza de recursos...
+[2025-07-19T04:33:17.837Z] DEBUG: [ef223ee8-410a-4e08-bfd2-ddd3327d6dd7] Cliente ya cerrado o inválido, omitiendo destrucción
+[2025-07-19T04:33:17.838Z] INFO: ✅ Cierre optimizado completado
+[2025-07-19T04:33:18.030Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T04:33:18.031Z] DEBUG: Información de sesiones guardada (0 sesiones)
+[2025-07-19T04:33:18.031Z] INFO: Limpiando todas las sesiones...
+[2025-07-19T04:33:18.031Z] INFO: ✅ Cierre optimizado completado
+[2025-07-19T04:33:18.161Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T04:33:18.162Z] DEBUG: Información de sesiones guardada (0 sesiones)
+[2025-07-19T04:33:18.163Z] INFO: Limpiando todas las sesiones...
+[2025-07-19T04:33:18.163Z] INFO: ✅ Cierre optimizado completado
+[2025-07-19T04:33:18.599Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T04:33:18.601Z] DEBUG: Información de sesiones guardada (0 sesiones)
+[2025-07-19T04:33:18.601Z] INFO: Limpiando todas las sesiones...
+[2025-07-19T04:33:18.601Z] INFO: ✅ Cierre optimizado completado
+[2025-07-19T04:33:18.753Z] INFO: SIGINT recibido, iniciando cierre RÁPIDO...
+[2025-07-19T04:33:18.754Z] DEBUG: Información de sesiones guardada (0 sesiones)
+[2025-07-19T04:33:18.754Z] INFO: Limpiando todas las sesiones...
+[2025-07-19T04:33:18.754Z] INFO: ✅ Cierre optimizado completado
+2025-07-20T21:22:30.141Z [32minfo[39m: 🔄 Restaurando sesiones previas...
+2025-07-20T21:22:30.146Z [32minfo[39m: 📦 Encontradas 1 sesiones para restaurar
+2025-07-20T21:22:30.146Z [32minfo[39m: [981fbcab] 🔄 Restaurando sesión...
+2025-07-20T21:22:30.146Z [32minfo[39m: [981fbcab] 🆕 Creando nueva sesión WhatsApp...
+2025-07-20T21:22:30.148Z [33mwarn[39m: [981fbcab] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+2025-07-20T21:22:30.149Z [32minfo[39m: [981fbcab] 🚀 Inicializando sesión asíncronamente...
+2025-07-20T21:22:30.149Z [32minfo[39m: [981fbcab] 🚀 Inicializando sesión...
+2025-07-20T21:22:32.150Z [32minfo[39m: ✅ Restauración completada. 1 sesiones activas
+2025-07-20T21:22:32.153Z [32minfo[39m: 🚀 WhatsApp Multi-Session Server corriendo en http://localhost:8083
+2025-07-20T21:22:32.154Z [32minfo[39m: 📱 Sistema de sesiones múltiples ACTIVADO
+2025-07-20T21:22:32.154Z [32minfo[39m: 🔧 Máximo 5 sesiones simultáneas
+2025-07-20T21:22:32.154Z [32minfo[39m: 📊 Dashboard: http://localhost:8083
+2025-07-20T21:22:32.154Z [32minfo[39m: 📋 Sesiones: http://localhost:8083/sessions
+2025-07-20T21:22:41.505Z [32minfo[39m: [981fbcab] 📱 QR Code recibido
+2025-07-20T21:22:41.561Z [32minfo[39m: [981fbcab] ✅ QR generado exitosamente
+2025-07-20T21:22:41.561Z [32minfo[39m: [981fbcab] 📱 QR generado en manager
+2025-07-20T21:22:41.561Z [32minfo[39m: [981fbcab] 📱 QR restaurado disponible
+2025-07-20T21:22:46.895Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🆕 Creando nueva sesión WhatsApp...
+2025-07-20T21:22:46.897Z [33mwarn[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+2025-07-20T21:22:46.897Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🚀 Inicializando sesión asíncronamente...
+2025-07-20T21:22:46.897Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🚀 Inicializando sesión...
+2025-07-20T21:22:48.564Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🆕 Creando nueva sesión WhatsApp...
+2025-07-20T21:22:48.565Z [33mwarn[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+2025-07-20T21:22:48.565Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🚀 Inicializando sesión asíncronamente...
+2025-07-20T21:22:48.565Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🚀 Inicializando sesión...
+2025-07-20T21:22:50.504Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📱 QR Code recibido
+2025-07-20T21:22:50.525Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] ✅ QR generado exitosamente
+2025-07-20T21:22:50.525Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📱 QR generado en manager
+2025-07-20T21:22:50.525Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📱 QR code generado y listo para escanear
+2025-07-20T21:22:52.221Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📱 QR Code recibido
+2025-07-20T21:22:52.235Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] ✅ QR generado exitosamente
+2025-07-20T21:22:52.235Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📱 QR generado en manager
+2025-07-20T21:22:52.235Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📱 QR code generado y listo para escanear
+2025-07-20T21:23:11.908Z [32minfo[39m: [981fbcab] 📱 Cargando WhatsApp Web: 100% - WhatsApp
+2025-07-20T21:23:11.909Z [32minfo[39m: [981fbcab] ⏳ WhatsApp al 99% - Esperando autenticación...
+2025-07-20T21:23:20.352Z [32minfo[39m: [981fbcab] ✅ Autenticado correctamente
+2025-07-20T21:23:21.043Z [32minfo[39m: [981fbcab] 🚀 Sesión lista y conectada
+2025-07-20T21:23:21.043Z [32minfo[39m: [981fbcab] 📞 Número conectado: 51912705923
+2025-07-20T21:23:21.043Z [32minfo[39m: [981fbcab] ✅ Sesión lista en manager
+2025-07-20T21:23:21.043Z [32minfo[39m: [981fbcab] ✅ Sesión restaurada y lista
+2025-07-20T21:23:27.845Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📱 Cargando WhatsApp Web: 100% - WhatsApp
+2025-07-20T21:23:27.845Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] ⏳ WhatsApp al 99% - Esperando autenticación...
+2025-07-20T21:23:33.271Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] ✅ Autenticado correctamente
+2025-07-20T21:23:33.850Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🚀 Sesión lista y conectada
+2025-07-20T21:23:33.850Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📞 Número conectado: 51912705923
+2025-07-20T21:23:33.850Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] ✅ Sesión lista en manager
+2025-07-20T21:23:33.851Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🚀 Sesión lista para enviar mensajes
+2025-07-20T21:23:33.851Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📞 Número conectado: 51912705923
+2025-07-20T21:23:34.796Z [32minfo[39m: [981fbcab] ✅ Autenticado correctamente
+2025-07-20T21:23:34.797Z [32minfo[39m: [981fbcab] ✅ Autenticado correctamente
+2025-07-20T21:23:34.799Z [32minfo[39m: [981fbcab] 📱 QR Code recibido
+2025-07-20T21:23:34.799Z [33mwarn[39m: [981fbcab] 🚫 QR ignorado - Estado actual: authenticated
+2025-07-20T21:23:35.363Z [32minfo[39m: [981fbcab] 🚀 Sesión lista y conectada
+2025-07-20T21:23:35.363Z [32minfo[39m: [981fbcab] 📞 Número conectado: 51912705923
+2025-07-20T21:23:35.363Z [32minfo[39m: [981fbcab] ✅ Sesión lista en manager
+2025-07-20T21:23:35.363Z [32minfo[39m: [981fbcab] ✅ Sesión restaurada y lista
+2025-07-20T21:23:35.363Z [32minfo[39m: [981fbcab] 🚀 Sesión lista y conectada
+2025-07-20T21:23:35.363Z [32minfo[39m: [981fbcab] 📞 Número conectado: 51912705923
+2025-07-20T21:23:35.363Z [32minfo[39m: [981fbcab] ✅ Sesión lista en manager
+2025-07-20T21:23:35.364Z [32minfo[39m: [981fbcab] ✅ Sesión restaurada y lista
+2025-07-20T21:23:36.440Z [33mwarn[39m: [981fbcab] 🔌 Desconectado: LOGOUT
+2025-07-20T21:23:36.442Z [33mwarn[39m: [981fbcab] Desconexión crítica: LOGOUT
+2025-07-20T21:23:40.044Z [32minfo[39m: [981fbcab] 📱 QR Code recibido
+2025-07-20T21:23:40.057Z [32minfo[39m: [981fbcab] ✅ QR generado exitosamente
+2025-07-20T21:23:40.057Z [32minfo[39m: [981fbcab] 📱 QR generado en manager
+2025-07-20T21:23:40.057Z [32minfo[39m: [981fbcab] 📱 QR restaurado disponible
+2025-07-20T21:23:41.450Z [32minfo[39m: [981fbcab] 🧹 Ejecutando limpieza forzada...
+2025-07-20T21:23:42.134Z [32minfo[39m: [981fbcab] 🗑️ Eliminando sesión...
+2025-07-20T21:23:42.135Z [32minfo[39m: [981fbcab] 🧹 Ejecutando limpieza forzada...
+2025-07-20T21:23:42.138Z [32minfo[39m: [981fbcab] ✅ Sesión eliminada exitosamente
+2025-07-20T21:23:52.673Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📱 Cargando WhatsApp Web: 100% - WhatsApp
+2025-07-20T21:23:52.674Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] ⏳ WhatsApp al 99% - Esperando autenticación...
+2025-07-20T21:23:59.150Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] ✅ Autenticado correctamente
+2025-07-20T21:23:59.687Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🚀 Sesión lista y conectada
+2025-07-20T21:23:59.688Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📞 Número conectado: 51912705923
+2025-07-20T21:23:59.688Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] ✅ Sesión lista en manager
+2025-07-20T21:23:59.688Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🚀 Sesión lista para enviar mensajes
+2025-07-20T21:23:59.688Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📞 Número conectado: 51912705923
+2025-07-20T21:25:41.471Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] 🆕 Creando nueva sesión WhatsApp...
+2025-07-20T21:25:41.473Z [33mwarn[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+2025-07-20T21:25:41.474Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] 🚀 Inicializando sesión asíncronamente...
+2025-07-20T21:25:41.474Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] 🚀 Inicializando sesión...
+2025-07-20T21:25:45.130Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] 📱 QR Code recibido
+2025-07-20T21:25:45.145Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] ✅ QR generado exitosamente
+2025-07-20T21:25:45.146Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] 📱 QR generado en manager
+2025-07-20T21:25:45.146Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] 📱 QR code generado y listo para escanear
+2025-07-20T21:25:57.436Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] 🗑️ Eliminando sesión...
+2025-07-20T21:25:57.437Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] 🧹 Ejecutando limpieza forzada...
+2025-07-20T21:25:57.638Z [32minfo[39m: [bb8eb9e1-bcb6-462b-abed-9cf6a10d2ce4] ✅ Sesión eliminada exitosamente
+2025-07-20T21:26:03.618Z [33mwarn[39m: Archivo Laravel .env no encontrado en: ../.env
+2025-07-20T22:23:24.947Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] ✅ Autenticado correctamente
+2025-07-20T22:23:24.949Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] ✅ Autenticado correctamente
+2025-07-20T22:23:24.950Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📱 QR Code recibido
+2025-07-20T22:23:24.950Z [33mwarn[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🚫 QR ignorado - Estado actual: authenticated
+2025-07-20T22:23:25.504Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🚀 Sesión lista y conectada
+2025-07-20T22:23:25.504Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📞 Número conectado: 51912705923
+2025-07-20T22:23:25.504Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] ✅ Sesión lista en manager
+2025-07-20T22:23:25.505Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🚀 Sesión lista para enviar mensajes
+2025-07-20T22:23:25.505Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📞 Número conectado: 51912705923
+2025-07-20T22:23:25.505Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🚀 Sesión lista y conectada
+2025-07-20T22:23:25.505Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📞 Número conectado: 51912705923
+2025-07-20T22:23:25.505Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] ✅ Sesión lista en manager
+2025-07-20T22:23:25.505Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🚀 Sesión lista para enviar mensajes
+2025-07-20T22:23:25.505Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📞 Número conectado: 51912705923
+2025-07-20T22:23:27.230Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] ✅ Autenticado correctamente
+2025-07-20T22:23:27.231Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] ✅ Autenticado correctamente
+2025-07-20T22:23:27.233Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📱 QR Code recibido
+2025-07-20T22:23:27.233Z [33mwarn[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🚫 QR ignorado - Estado actual: authenticated
+2025-07-20T22:23:27.838Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🚀 Sesión lista y conectada
+2025-07-20T22:23:27.838Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📞 Número conectado: 51912705923
+2025-07-20T22:23:27.838Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] ✅ Sesión lista en manager
+2025-07-20T22:23:27.839Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🚀 Sesión lista para enviar mensajes
+2025-07-20T22:23:27.839Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📞 Número conectado: 51912705923
+2025-07-20T22:23:27.840Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🚀 Sesión lista y conectada
+2025-07-20T22:23:27.840Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📞 Número conectado: 51912705923
+2025-07-20T22:23:27.840Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] ✅ Sesión lista en manager
+2025-07-20T22:23:27.840Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🚀 Sesión lista para enviar mensajes
+2025-07-20T22:23:27.840Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📞 Número conectado: 51912705923
+2025-07-20T22:23:33.038Z [33mwarn[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🔌 Desconectado: LOGOUT
+2025-07-20T22:23:33.038Z [33mwarn[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] Desconexión crítica: LOGOUT
+2025-07-20T22:23:33.058Z [33mwarn[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🔌 Desconectado: LOGOUT
+2025-07-20T22:23:33.060Z [33mwarn[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] Desconexión crítica: LOGOUT
+2025-07-20T22:23:36.741Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📱 QR Code recibido
+2025-07-20T22:23:36.757Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] ✅ QR generado exitosamente
+2025-07-20T22:23:36.757Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📱 QR generado en manager
+2025-07-20T22:23:36.758Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 📱 QR code generado y listo para escanear
+2025-07-20T22:23:37.913Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📱 QR Code recibido
+2025-07-20T22:23:37.925Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] ✅ QR generado exitosamente
+2025-07-20T22:23:37.925Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📱 QR generado en manager
+2025-07-20T22:23:37.925Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📱 QR code generado y listo para escanear
+2025-07-20T22:23:38.039Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🧹 Ejecutando limpieza forzada...
+2025-07-20T22:23:38.070Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🧹 Ejecutando limpieza forzada...

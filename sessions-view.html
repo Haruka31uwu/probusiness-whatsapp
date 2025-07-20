@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesiones WhatsApp - Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #f5f6fa; 
+            padding: 20px; 
+        }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            text-align: center; 
+            margin-bottom: 30px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .assignments-panel { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+            border-left: 4px solid #25D366; 
+        }
+        .assignments-panel h3 { color: #333; margin-bottom: 15px; }
+        .assignment-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px; 
+            background: #f8f9fa; 
+            border-radius: 8px; 
+            margin-bottom: 10px; 
+        }
+        .assignment-info { display: flex; align-items: center; gap: 10px; }
+        .assignment-badge { 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 0.8rem; 
+            font-weight: bold; 
+            color: white; 
+        }
+        .sells-badge { background: #ff6b6b; }
+        .coord-badge { background: #74b9ff; }
+        .sessions-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); 
+            gap: 20px; 
+        }
+        .session-card { 
+            background: white; 
+            border-radius: 10px; 
+            padding: 20px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+            border-left: 4px solid #ddd; 
+            transition: transform 0.2s ease; 
+        }
+        .session-card:hover { transform: translateY(-2px); }
+        .session-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 15px; 
+        }
+        .session-header h3 { color: #333; }
+        .status-badge { 
+            color: white; 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 0.8rem; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+        }
+        .session-info p { 
+            margin: 8px 0; 
+            color: #555; 
+            font-size: 0.9rem; 
+        }
+        .session-actions { 
+            margin-top: 15px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 8px; 
+        }
+        .btn { 
+            padding: 6px 12px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            text-decoration: none; 
+            font-size: 0.8rem; 
+            transition: all 0.2s ease; 
+        }
+        .btn-qr { background: #25D366; color: white; }
+        .btn-status { background: #17a2b8; color: white; }
+        .btn-regenerate { background: #ffc107; color: #333; }
+        .btn-restart { background: #fd7e14; color: white; }
+        .btn-delete { background: #dc3545; color: white; }
+        .btn-assign-sells { background: #ff6b6b; color: white; margin-right: 5px; }
+        .btn-assign-coord { background: #74b9ff; color: white; }
+        .btn:hover { transform: translateY(-1px); }
+        .back-btn { 
+            background: #6c757d; 
+            color: white; 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            margin-bottom: 20px; 
+            display: inline-block; 
+        }
+        .create-session { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); 
+            color: white; 
+            border: none; 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 50%; 
+            font-size: 1.5rem; 
+            cursor: pointer; 
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3); 
+            transition: all 0.3s ease; 
+        }
+        .create-session:hover { 
+            transform: scale(1.1); 
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
+        }
+        .assignment-buttons { 
+            margin-top: 10px; 
+            padding-top: 10px; 
+            border-top: 1px solid #eee; 
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-btn">← Volver al Dashboard</a>
+    
+    <div class="header">
+        <h1>📱 Sesiones WhatsApp</h1>
+        <p>Panel de administración de sesiones activas</p>
+    </div>
+
+    <div class="assignments-panel">
+        <h3>🎯 Asignaciones Actuales</h3>
+        <div id="assignmentsContent">
+            <p style="color: #666; text-align: center;">Cargando asignaciones...</p>
+        </div>
+    </div>
+
+    <div id="sessionsContainer">
+        <p style="color: #666; text-align: center;">Cargando sesiones...</p>
+    </div>
+
+    <button class="create-session" onclick="window.location.href='/'">+</button>
+
+    <script>
+        let currentAssignments = {};
+        let allSessions = [];
+
+        async function loadEverything() {
+            await Promise.all([loadAssignments(), loadSessions()]);
+        }
+
+        async function loadAssignments() {
+            try {
+                const response = await fetch('/api/current-assignments');
+                const assignments = await response.json();
+                currentAssignments = assignments;
+                
+                const content = document.getElementById('assignmentsContent');
+                let html = '';
+                
+                if (assignments.sells || assignments.coordination) {
+                    if (assignments.sells) {
+                        const sellsSession = findSessionById(assignments.sells);
+                        const sellsPhone = sellsSession ? (sellsSession.phoneNumber || 'Desconocido') : 'Sesión no encontrada';
+                        html += '<div class="assignment-row"><div class="assignment-info"><span class="assignment-badge sells-badge">💰 VENTAS</span><span>' + sellsPhone + ' (' + assignments.sells.substring(0, 8) + '...)</span></div><button onclick="unassign(\'sells\')" class="btn" style="background: #dc3545; color: white;">❌ Desasignar</button></div>';
+                    }
+                    if (assignments.coordination) {
+                        const coordSession = findSessionById(assignments.coordination);
+                        const coordPhone = coordSession ? (coordSession.phoneNumber || 'Desconocido') : 'Sesión no encontrada';
+                        html += '<div class="assignment-row"><div class="assignment-info"><span class="assignment-badge coord-badge">🎯 COORDINACIÓN</span><span>' + coordPhone + ' (' + assignments.coordination.substring(0, 8) + '...)</span></div><button onclick="unassign(\'coordination\')" class="btn" style="background: #dc3545; color: white;">❌ Desasignar</button></div>';
+                    }
+                } else {
+                    html = '<p style="color: #666; text-align: center;">No hay asignaciones activas</p>';
+                }
+                
+                content.innerHTML = html;
+            } catch (error) {
+                console.error('Error cargando asignaciones:', error);
+                document.getElementById('assignmentsContent').innerHTML = '<p style="color: #dc3545;">Error cargando asignaciones</p>';
+            }
+        }
+
+                 async function loadSessions() {
+             try {
+                 const response = await fetch('/api/sessions');
+                 const data = await response.json();
+                 allSessions = data.sessions || [];
+                 
+                 // Actualizar también las estadísticas si están disponibles
+                 const stats = data.stats || {};
+                
+                const container = document.getElementById('sessionsContainer');
+                
+                if (allSessions.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; padding: 60px 20px; color: #666;"><h3>😴 No hay sesiones activas</h3><p>Crea una nueva sesión para comenzar</p></div>';
+                    return;
+                }
+                
+                let html = '<div class="sessions-container">';
+                
+                allSessions.forEach(session => {
+                    const statusColors = {
+                        'authenticated': '#28a745',
+                        'waiting_qr': '#ffc107', 
+                        'loading': '#17a2b8',
+                        'initializing': '#6f42c1',
+                        'failed': '#dc3545',
+                        'disconnected': '#6c757d'
+                    };
+                    
+                    const statusIcons = {
+                        'authenticated': '✅',
+                        'waiting_qr': '📱', 
+                        'loading': '⏳',
+                        'initializing': '🔄',
+                        'failed': '❌',
+                        'disconnected': '🔌'
+                    };
+                    
+                    const statusColor = statusColors[session.status] || '#6c757d';
+                    const statusIcon = statusIcons[session.status] || '❓';
+                    const phoneNumber = session.phoneNumber || 'No disponible';
+                    const shortId = session.sessionId.substring(0, 8);
+                    
+                    html += '<div class="session-card" style="border-left-color: ' + statusColor + '">';
+                    html += '<div class="session-header">';
+                    html += '<h3>' + statusIcon + ' ' + shortId + '...</h3>';
+                    html += '<span class="status-badge" style="background: ' + statusColor + '">' + session.status + '</span>';
+                    html += '</div>';
+                    html += '<div class="session-info">';
+                    html += '<p><strong>📞 Teléfono:</strong> ' + phoneNumber + '</p>';
+                    html += '<p><strong>🕒 Última actividad:</strong> ' + (session.lastActivity ? new Date(session.lastActivity).toLocaleString('es-ES') : 'Nunca') + '</p>';
+                    if (session.qrAvailable) {
+                        html += '<p><strong>📱 QR:</strong> <span style="color: #28a745;">Disponible</span></p>';
+                    }
+                    html += '</div>';
+                    html += '<div class="session-actions">';
+                    
+                    if (session.qrAvailable) {
+                        html += '<a href="/api/sessions/' + session.sessionId + '/qr" target="_blank" class="btn btn-qr">📱 Ver QR</a>';
+                    }
+                    html += '<button onclick="regenerateQR(\'' + session.sessionId + '\')" class="btn btn-regenerate">🔄 Regenerar</button>';
+                    html += '<button onclick="restartSession(\'' + session.sessionId + '\')" class="btn btn-restart">🔃 Reiniciar</button>';
+                    html += '<button onclick="deleteSession(\'' + session.sessionId + '\')" class="btn btn-delete">🗑️ Eliminar</button>';
+                    
+                    // Botones de asignación solo para sesiones listas
+                    if (session.isReady && phoneNumber !== 'No disponible') {
+                        html += '<div class="assignment-buttons">';
+                        html += '<button onclick="assignToSells(\'' + session.sessionId + '\')" class="btn btn-assign-sells">💰 Asignar a Ventas</button>';
+                        html += '<button onclick="assignToCoordination(\'' + session.sessionId + '\')" class="btn btn-assign-coord">🎯 Asignar a Coordinación</button>';
+                        html += '</div>';
+                    }
+                    
+                    html += '</div></div>';
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error cargando sesiones:', error);
+                document.getElementById('sessionsContainer').innerHTML = '<p style="color: #dc3545;">Error cargando sesiones</p>';
+            }
+        }
+
+        function findSessionById(sessionId) {
+            return allSessions.find(s => s.sessionId === sessionId) || null;
+        }
+
+        async function assignToSells(sessionId) {
+            if (currentAssignments.sells && currentAssignments.sells !== sessionId) {
+                if (!confirm('Ya hay un número asignado a VENTAS. ¿Reemplazar la asignación actual?')) return;
+            }
+            await assignNumber(sessionId, 'sells');
+        }
+
+        async function assignToCoordination(sessionId) {
+            if (currentAssignments.coordination && currentAssignments.coordination !== sessionId) {
+                if (!confirm('Ya hay un número asignado a COORDINACIÓN. ¿Reemplazar la asignación actual?')) return;
+            }
+            await assignNumber(sessionId, 'coordination');
+        }
+
+        async function assignNumber(sessionId, type) {
+            const typeName = type === 'sells' ? 'VENTAS' : 'COORDINACIÓN';
+            try {
+                const response = await fetch('/api/assign-number', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId, type })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('✅ Número asignado a ' + typeName + ' exitosamente!');
+                    await loadEverything();
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        async function unassign(type) {
+            const typeName = type === 'sells' ? 'VENTAS' : 'COORDINACIÓN';
+            if (!confirm('¿Desasignar el número de ' + typeName + '?')) return;
+            
+            try {
+                const response = await fetch('/api/assign-number', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: '', type })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('✅ Número desasignado de ' + typeName);
+                    await loadEverything();
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        async function regenerateQR(sessionId) {
+            if (!confirm('¿Regenerar QR para esta sesión?')) return;
+            
+            try {
+                const response = await fetch('/api/sessions/' + sessionId + '/regenerate-qr', { method: 'POST' });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('✅ QR regenerado exitosamente');
+                    await loadEverything();
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        async function restartSession(sessionId) {
+            if (!confirm('¿Reiniciar esta sesión? Se perderá la conexión actual.')) return;
+            
+            try {
+                const response = await fetch('/api/sessions/' + sessionId + '/reiniciar', { method: 'POST' });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('✅ Sesión reiniciada exitosamente');
+                    await loadEverything();
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        async function deleteSession(sessionId) {
+            if (!confirm('¿Eliminar esta sesión permanentemente?')) return;
+            
+            try {
+                const response = await fetch('/api/sessions/' + sessionId, { method: 'DELETE' });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('✅ Sesión eliminada exitosamente');
+                    await loadEverything();
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        // Cargar todo al inicio
+        loadEverything();
+        
+        // Auto-refresh cada 10 segundos
+        setInterval(loadEverything, 10000);
+    </script>
+</body>
+</html> 
