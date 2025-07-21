@@ -10,6 +10,8 @@ Esta es la versión del código que **funcionaba perfectamente** sin problemas d
 - ✅ **Recuperación automática** - Manejo inteligente de desconexiones
 - ✅ **Dashboard moderno** - Interfaz web para gestión de sesiones
 - ✅ **Envío de mensajes y archivos** - Funcionalidad completa de WhatsApp
+- ✅ **Asignación a Laravel** - Integración con ventas y coordinación
+- ✅ **Vista de QR mejorada** - Con botones de asignación automática
 
 ## 📋 Diferencias con la versión actual
 
@@ -58,9 +60,10 @@ pm2 restart whatsapp-multisession-working
 ## 📱 Uso del Dashboard
 
 1. **Acceder al dashboard**: `http://localhost:8083`
-2. **Crear nueva sesión**: Click en "Crear Sesión"
-3. **Escanear QR**: Acceder a la URL del QR generada
-4. **Enviar mensajes**: Usar la API o el dashboard
+2. **Crear nueva sesión**: Click en "Crear Sesión" (se abre automáticamente en nueva pestaña)
+3. **Escanear QR**: La vista de QR se abre automáticamente
+4. **Asignar a Laravel**: Usar los botones de asignación en la vista de sesión
+5. **Enviar mensajes**: Usar la API o el dashboard
 
 ## 🔧 API Endpoints
 
@@ -100,6 +103,22 @@ Content-Type: multipart/form-data
   "mensaje": "Mira este archivo",
   "archivo": [archivo]
 }
+```
+
+### Asignar a Laravel
+```bash
+POST /api/assign-number
+Content-Type: application/json
+
+{
+  "sessionId": "uuid-session-id",
+  "type": "sells"  // o "coordination"
+}
+```
+
+### Obtener asignaciones actuales
+```bash
+GET /api/current-assignments
 ```
 
 ### Reiniciar sesión
@@ -146,6 +165,7 @@ Si tienes sesiones en la versión actual y quieres migrar:
 3. **Limpieza de procesos** - Eliminación de procesos huérfanos
 4. **Manejo de errores** - Captura y logging de errores
 5. **Cierre limpio** - Guardado de estado antes de cerrar
+6. **Integración Laravel** - Actualización automática del .env
 
 ## 🔧 Configuración
 
@@ -154,6 +174,7 @@ Si tienes sesiones en la versión actual y quieres migrar:
 PORT=8083                    # Puerto del servidor
 MAX_SESSIONS=15             # Máximo de sesiones simultáneas
 NODE_ENV=production         # Entorno de ejecución
+LARAVEL_ENV_PATH=../.env    # Ruta al archivo .env de Laravel
 ```
 
 ### Configuración de Puppeteer

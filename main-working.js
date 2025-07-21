@@ -191,8 +191,8 @@ const createIsolatedClient = (sessionId, isRestore = false) => {
             type: 'none' // Desactivar caché de versión web
         },
         takeoverOnConflict: true, // Permitir toma de control al restaurar una sesión
-        qrMaxRetries: isRestore ? 0 : 3, // No generar QR para sesiones restauradas
-        authTimeoutMs: isRestore ? 90000 : 60000, // Más tiempo para restaurar
+        qrMaxRetries: isRestore ? 0 : 5, // No generar QR para sesiones restauradas
+        authTimeoutMs: isRestore ? 90000 : 100000, // Más tiempo para restaurar
         linkingMethod: 'promptStandard',
         userAgent: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.${Math.floor(Math.random() * 10000)}.0 Safari/537.36 Edg/123.0.${Math.floor(Math.random() * 1000)}.0`,
         restartOnAuthFail: true,
@@ -777,14 +777,161 @@ app.get('/api/sessions/:id/qr', async (req, res) => {
     if (session.status === 'authenticated') {
         // Usar phoneNumber de la información almacenada si está disponible
         const phoneNumber = session.phoneNumber || session.client.info?.wid?.user || null;
+        const currentAssignments = getCurrentAssignmentsFromEnv();
 
         return res.send(`
-            <html><body>
-                <h1>Sesión ${req.params.id}</h1>
-                <p style="color:green;">✅ Autenticada</p>
-                <p>Número de teléfono: ${phoneNumber || 'No disponible'}</p>
-                <p><button onclick="fetch('/api/sessions/${req.params.id}/reiniciar', {method: 'POST'}).then(() => window.location.reload())">Reiniciar sesión</button></p>
-            </body></html>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>WhatsApp Sesión - ${req.params.id}</title>
+                <style>
+                    body { 
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                        color: white; 
+                        text-align: center; 
+                        margin-top: 50px; 
+                        padding: 20px;
+                    }
+                    .container { max-width: 600px; margin: 0 auto; }
+                    .status-card { 
+                        background: rgba(255,255,255,0.1); 
+                        padding: 30px; 
+                        border-radius: 15px; 
+                        backdrop-filter: blur(10px); 
+                        margin-bottom: 20px;
+                    }
+                    .phone-number { 
+                        font-size: 1.5rem; 
+                        font-weight: bold; 
+                        margin: 20px 0; 
+                        color: #25D366; 
+                    }
+                    .btn { 
+                        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); 
+                        color: white; 
+                        border: none; 
+                        padding: 12px 24px; 
+                        border-radius: 25px; 
+                        cursor: pointer; 
+                        font-size: 1rem; 
+                        transition: all 0.3s ease; 
+                        text-decoration: none; 
+                        display: inline-block; 
+                        margin: 5px;
+                    }
+                    .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+                    .btn-secondary { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); }
+                    .btn-warning { background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%); }
+                    .assignments { 
+                        background: rgba(255,255,255,0.1); 
+                        padding: 20px; 
+                        border-radius: 15px; 
+                        backdrop-filter: blur(10px); 
+                        margin-top: 20px;
+                    }
+                    .assignment-row { 
+                        display: flex; 
+                        justify-content: space-between; 
+                        align-items: center; 
+                        padding: 10px 0; 
+                        border-bottom: 1px solid rgba(255,255,255,0.1); 
+                    }
+                    .assignment-type { font-weight: bold; }
+                    .assignment-value { opacity: 0.8; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="status-card">
+                        <h1>📱 WhatsApp Sesión</h1>
+                        <p style="color:#25D366; font-size: 1.2rem;">✅ Autenticada y lista</p>
+                        <div class="phone-number">📞 ${phoneNumber || 'Número no disponible'}</div>
+                        <p><strong>Sesión ID:</strong> ${req.params.id}</p>
+                        
+                        <div style="margin: 30px 0;">
+                            <button class="btn" onclick="window.open('/api/sessions/${req.params.id}/status', '_blank')">
+                                📊 Ver Estado
+                            </button>
+                            <button class="btn btn-secondary" onclick="fetch('/api/sessions/${req.params.id}/reiniciar', {method: 'POST'}).then(() => window.location.reload())">
+                                🔄 Reiniciar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="assignments">
+                        <h3>🎯 Asignar a Laravel</h3>
+                        <div class="assignment-row">
+                            <span class="assignment-type">💰 Ventas:</span>
+                            <span class="assignment-value">${currentAssignments.sells || 'No asignado'}</span>
+                        </div>
+                        <div class="assignment-row">
+                            <span class="assignment-type">🎯 Coordinación:</span>
+                            <span class="assignment-value">${currentAssignments.coordination || 'No asignado'}</span>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <button class="btn" onclick="assignSession('${req.params.id}', 'sells')">
+                                🎯 Asignar a Ventas
+                            </button>
+                            <button class="btn btn-secondary" onclick="assignSession('${req.params.id}', 'coordination')">
+                                🎯 Asignar a Coordinación
+                            </button>
+                            <button class="btn btn-warning" onclick="unassignSession('sells')">
+                                ❌ Desasignar Ventas
+                            </button>
+                            <button class="btn btn-warning" onclick="unassignSession('coordination')">
+                                ❌ Desasignar Coordinación
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    async function assignSession(sessionId, type) {
+                        try {
+                            const response = await fetch('/api/assign-number', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ sessionId, type })
+                            });
+                            
+                            const data = await response.json();
+                            
+                            if (response.ok) {
+                                alert('✅ ' + data.message);
+                                window.location.reload();
+                            } else {
+                                throw new Error(data.error);
+                            }
+                        } catch (error) {
+                            alert('❌ Error: ' + error.message);
+                        }
+                    }
+
+                    async function unassignSession(type) {
+                        try {
+                            const response = await fetch('/api/assign-number', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ sessionId: null, type })
+                            });
+                            
+                            const data = await response.json();
+                            
+                            if (response.ok) {
+                                alert('✅ ' + data.message);
+                                window.location.reload();
+                            } else {
+                                throw new Error(data.error);
+                            }
+                        } catch (error) {
+                            alert('❌ Error: ' + error.message);
+                        }
+                    }
+                </script>
+            </body>
+            </html>
         `);
     }
 
@@ -924,6 +1071,7 @@ app.get('/', (req, res) => {
         sessionsWithQR: Array.from(sessions.values()).filter(s => s.qrData).length,
         loadingSessions: Array.from(sessions.values()).filter(s => s.status === 'initializing' || s.status === 'loading').length
     };
+    const currentAssignments = getCurrentAssignmentsFromEnv();
     
     res.send(`
         <!DOCTYPE html>
@@ -987,6 +1135,21 @@ app.get('/', (req, res) => {
                 }
                 .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
                 .btn-secondary { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); }
+                .assignments { 
+                    background: rgba(255,255,255,0.1); 
+                    padding: 20px; 
+                    border-radius: 15px; 
+                    backdrop-filter: blur(10px); 
+                }
+                .assignment-row { 
+                    display: flex; 
+                    justify-content: space-between; 
+                    align-items: center; 
+                    padding: 10px 0; 
+                    border-bottom: 1px solid rgba(255,255,255,0.1); 
+                }
+                .assignment-type { font-weight: bold; }
+                .assignment-value { opacity: 0.8; }
             </style>
         </head>
         <body>
@@ -1041,6 +1204,18 @@ app.get('/', (req, res) => {
                         <a href="/api/stats" class="btn btn-secondary" target="_blank">Ver Stats</a>
                     </div>
                 </div>
+
+                <div class="assignments">
+                    <h3>🎯 Asignaciones Laravel</h3>
+                    <div class="assignment-row">
+                        <span class="assignment-type">💰 Ventas:</span>
+                        <span class="assignment-value">${currentAssignments.sells || 'No asignado'}</span>
+                    </div>
+                    <div class="assignment-row">
+                        <span class="assignment-type">🎯 Coordinación:</span>
+                        <span class="assignment-value">${currentAssignments.coordination || 'No asignado'}</span>
+                    </div>
+                </div>
             </div>
 
             <script>
@@ -1055,7 +1230,16 @@ app.get('/', (req, res) => {
                         const data = await response.json();
                         
                         if (response.ok) {
-                            alert('✅ Sesión creada: ' + data.sessionId.substring(0, 8) + '...');
+                            const sessionId = data.sessionId;
+                            const shortId = sessionId.substring(0, 8) + '...';
+                            
+                            // Mostrar mensaje de éxito
+                            alert('✅ Sesión creada: ' + shortId);
+                            
+                            // Abrir la vista de QR en nueva pestaña
+                            window.open('/api/sessions/' + sessionId + '/qr', '_blank');
+                            
+                            // Recargar el dashboard
                             window.location.reload();
                         } else {
                             throw new Error(data.error);
@@ -1133,10 +1317,137 @@ app.get('/api/stats', (req, res) => {
     }
 });
 
+// API: Asignar número a Laravel
+app.post('/api/assign-number', (req, res) => {
+    try {
+        const { sessionId, type } = req.body;
+
+        if (!type || !['sells', 'coordination'].includes(type)) {
+            return res.status(400).json({ error: 'Tipo debe ser "sells" o "coordination"' });
+        }
+
+        const session = sessionId ? sessions.get(sessionId) : null;
+        
+        if (sessionId && !session) {
+            return res.status(404).json({ error: 'Sesión no encontrada' });
+        }
+
+        if (sessionId && (!session.status === 'authenticated' || !session.phoneNumber)) {
+            return res.status(400).json({ error: 'Sesión no está lista o no tiene número' });
+        }
+
+        // Actualizar asignaciones
+        const envKey = type === 'sells' ? 'WHATSAPP_VENTAS_URL' : 'WHATSAPP_COORDINACION_URL';
+        const url = sessionId ? `http://localhost:${port}/api/sessions/${sessionId}/send-message` : '';
+        
+        const success = updateLaravelEnv(envKey, url);
+        
+        if (success) {
+            sessionAssignments[type] = sessionId;
+            
+            res.json({
+                success: true,
+                message: `Número ${sessionId ? 'asignado' : 'desasignado'} exitosamente`,
+                assignment: {
+                    type: type,
+                    sessionId: sessionId,
+                    phoneNumber: session?.phoneNumber || null
+                }
+            });
+        } else {
+            res.status(500).json({ error: 'Error actualizando archivo .env' });
+        }
+
+    } catch (error) {
+        logger.error(`Error en asignación: ${error.message}`);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// API: Obtener asignaciones actuales
+app.get('/api/current-assignments', (req, res) => {
+    try {
+        const assignments = getCurrentAssignmentsFromEnv();
+        res.json(assignments);
+    } catch (error) {
+        logger.error(`Error obteniendo asignaciones: ${error.message}`);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Página de sesiones (reutilizar la existente)
 app.get('/sessions', (req, res) => {
     res.sendFile(path.join(__dirname, 'sessions-view.html'));
 });
+
+// Variables globales para asignaciones Laravel
+let laravelEnvPath = process.env.LARAVEL_ENV_PATH || '../.env';
+const sessionAssignments = {
+    sells: null,
+    coordination: null
+};
+
+// Funciones auxiliares para Laravel .env
+function updateLaravelEnv(key, value) {
+    try {
+        if (!fs.existsSync(laravelEnvPath)) {
+            logger.warn(`Archivo Laravel .env no encontrado en: ${laravelEnvPath}`);
+            return false;
+        }
+
+        let envContent = fs.readFileSync(laravelEnvPath, 'utf8');
+        const lines = envContent.split('\n');
+        let found = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].startsWith(`${key}=`)) {
+                lines[i] = `${key}=${value || ''}`;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            lines.push(`${key}=${value || ''}`);
+        }
+
+        fs.writeFileSync(laravelEnvPath, lines.join('\n'));
+        logger.info(`✅ Laravel .env actualizado: ${key}=${value || 'VACÍO'}`);
+        return true;
+
+    } catch (error) {
+        logger.error(`❌ Error actualizando Laravel .env: ${error.message}`);
+        return false;
+    }
+}
+
+function getCurrentAssignmentsFromEnv() {
+    try {
+        if (!fs.existsSync(laravelEnvPath)) {
+            return { sells: null, coordination: null };
+        }
+
+        const envContent = fs.readFileSync(laravelEnvPath, 'utf8');
+        const lines = envContent.split('\n');
+        
+        const assignments = { sells: null, coordination: null };
+        
+        for (const line of lines) {
+            if (line.startsWith('WHATSAPP_VENTAS_URL=')) {
+                const sessionId = line.split('sessions/')[1]?.split('/')[0];
+                if (sessionId) assignments.sells = sessionId;
+            } else if (line.startsWith('WHATSAPP_COORDINACION_URL=')) {
+                const sessionId = line.split('sessions/')[1]?.split('/')[0];
+                if (sessionId) assignments.coordination = sessionId;
+            }
+        }
+        
+        return assignments;
+    } catch (error) {
+        logger.error(`Error leyendo asignaciones del .env: ${error.message}`);
+        return { sells: null, coordination: null };
+    }
+}
 
 // 7. Inicialización mejorada
 (async () => {

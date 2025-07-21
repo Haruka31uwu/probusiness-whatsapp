@@ -379,3 +379,499 @@
 2025-07-20T22:23:37.925Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 📱 QR code generado y listo para escanear
 2025-07-20T22:23:38.039Z [32minfo[39m: [48e56d7e-c1fe-453a-b781-aa1fada9e056] 🧹 Ejecutando limpieza forzada...
 2025-07-20T22:23:38.070Z [32minfo[39m: [f95eedb4-ea2a-49c7-9450-2fe56f5ab0d4] 🧹 Ejecutando limpieza forzada...
+[2025-07-21T04:33:18.800Z] INFO: Iniciando servidor con preservación de sesiones...
+[2025-07-21T04:33:18.819Z] INFO: No hay sesiones previas para restaurar
+[2025-07-21T04:33:18.823Z] ERROR: Excepción no capturada: Error: listen EADDRINUSE: address already in use :::8083
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at Function.listen (C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\node_modules\express\lib\application.js:635:24)
+    at C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\main-working.js:1476:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-07-21T04:33:18.828Z] INFO: Procesos Chromium huérfanos terminados
+[2025-07-21T04:33:18.829Z] INFO: Archivos temporales generales eliminados
+[2025-07-21T04:33:22.610Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:33:22.612Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:22.837Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:33:22.840Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:22.981Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:33:22.982Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:23.624Z] INFO: Proceso terminado correctamente
+2025-07-21T04:33:25.515Z [32minfo[39m: 🛑 Cerrando servidor...
+[2025-07-21T04:33:28.371Z] INFO: Iniciando servidor con preservación de sesiones...
+[2025-07-21T04:33:28.386Z] INFO: Encontradas 0 sesiones para restaurar
+[2025-07-21T04:33:28.389Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T04:33:28.390Z] INFO: Modo de persistencia de sesiones: ACTIVADO
+[2025-07-21T04:33:28.393Z] INFO: Procesos Chromium huérfanos terminados
+[2025-07-21T04:33:28.394Z] INFO: Archivos temporales generales eliminados
+[2025-07-21T04:33:37.736Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:38.803Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error inicializando: Failed to launch the browser process! spawn /usr/bin/chromium-browser ENOENT
+
+
+TROUBLESHOOTING: https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md
+
+[2025-07-21T04:33:38.805Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:39.977Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:41.561Z] INFO: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Reiniciando sesión por solicitud...
+[2025-07-21T04:33:41.562Z] WARN: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error destruyendo cliente: Cannot read properties of null (reading 'close')
+[2025-07-21T04:33:41.563Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:41.572Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:42.465Z] INFO: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Reiniciando sesión por solicitud...
+[2025-07-21T04:33:42.465Z] WARN: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error destruyendo cliente: Cannot read properties of null (reading 'close')
+[2025-07-21T04:33:42.467Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:42.475Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:42.574Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error reinicializando: Failed to launch the browser process! spawn /usr/bin/chromium-browser ENOENT
+
+
+TROUBLESHOOTING: https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md
+
+[2025-07-21T04:33:42.576Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:43.480Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error reinicializando: Failed to launch the browser process! spawn /usr/bin/chromium-browser ENOENT
+
+
+TROUBLESHOOTING: https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md
+
+[2025-07-21T04:33:43.481Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:44.526Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:46.574Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:48.626Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:50.669Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:52.709Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:54.068Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:33:54.069Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:33:54.070Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:54.212Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:33:54.212Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:33:54.214Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:54.363Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:33:54.364Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:33:54.365Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:54.750Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:55.060Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:33:55.060Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:33:55.061Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:33:55.085Z] INFO: Proceso terminado correctamente
+2025-07-21T04:37:10.557Z [32minfo[39m: 🔄 Restaurando sesiones previas...
+2025-07-21T04:37:10.561Z [32minfo[39m: 📦 Encontradas 1 sesiones guardadas
+2025-07-21T04:37:10.561Z [32minfo[39m: 🔄 Procesando lote 1/1
+2025-07-21T04:37:10.561Z [32minfo[39m: [c50982b0] 🔄 Restaurando sesión...
+2025-07-21T04:37:10.561Z [32minfo[39m: [c50982b0] 🆕 Creando nueva sesión WhatsApp...
+2025-07-21T04:37:10.563Z [33mwarn[39m: [c50982b0] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+2025-07-21T04:37:10.563Z [32minfo[39m: [c50982b0] Usando Chromium de Puppeteer
+2025-07-21T04:37:10.563Z [32minfo[39m: [c50982b0] 🚀 Inicializando sesión asíncronamente...
+2025-07-21T04:37:10.564Z [32minfo[39m: [c50982b0] 🚀 Inicializando sesión...
+2025-07-21T04:37:10.622Z [32minfo[39m: ✅ Restauración completada. 1 sesiones activas de 1 intentadas
+2025-07-21T04:37:10.624Z [32minfo[39m: 🚀 WhatsApp Multi-Session Server corriendo en http://localhost:8083
+2025-07-21T04:37:10.625Z [32minfo[39m: 📱 Sistema de sesiones múltiples ACTIVADO
+2025-07-21T04:37:10.625Z [32minfo[39m: 🔧 Máximo 50 sesiones simultáneas
+2025-07-21T04:37:10.625Z [32minfo[39m: 📊 Dashboard: http://localhost:8083
+2025-07-21T04:37:10.625Z [32minfo[39m: 📋 Sesiones: http://localhost:8083/sessions
+2025-07-21T04:37:25.535Z [32minfo[39m: [c50982b0] 🗑️ Eliminando sesión...
+2025-07-21T04:37:25.536Z [32minfo[39m: [c50982b0] 🧹 Ejecutando limpieza forzada...
+2025-07-21T04:37:25.538Z [33mwarn[39m: [c50982b0] 🔧 Error de protocolo detectado (intento 1/3): Protocol error (Runtime.callFunctionOn): Target closed.
+2025-07-21T04:37:25.540Z [31merror[39m: [c50982b0] ❌ Error inicializando: Protocol error (Runtime.callFunctionOn): Target closed.
+2025-07-21T04:37:25.541Z [31merror[39m: [c50982b0] ❌ Error en inicialización asíncrona: Protocol error (Runtime.callFunctionOn): Target closed.
+2025-07-21T04:37:25.622Z [32minfo[39m: [c50982b0] ✅ Carpeta de autenticación eliminada: C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\.wwebjs_auth\session-c50982b0
+2025-07-21T04:37:25.624Z [32minfo[39m: [c50982b0] ✅ Sesión eliminada exitosamente
+2025-07-21T04:37:28.320Z [32minfo[39m: [b85cd432-ad10-436e-b352-79067f12d609] 🆕 Creando nueva sesión WhatsApp...
+2025-07-21T04:37:28.322Z [33mwarn[39m: [b85cd432-ad10-436e-b352-79067f12d609] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+2025-07-21T04:37:28.322Z [32minfo[39m: [b85cd432-ad10-436e-b352-79067f12d609] Usando Chromium de Puppeteer
+2025-07-21T04:37:28.323Z [32minfo[39m: [b85cd432-ad10-436e-b352-79067f12d609] 🚀 Inicializando sesión asíncronamente...
+2025-07-21T04:37:28.323Z [32minfo[39m: [b85cd432-ad10-436e-b352-79067f12d609] 🚀 Inicializando sesión...
+2025-07-21T04:40:13.108Z [32minfo[39m: 🛑 Cerrando servidor...
+2025-07-21T04:40:14.803Z [32minfo[39m: 🔄 Restaurando sesiones previas...
+2025-07-21T04:40:14.807Z [32minfo[39m: 📦 Encontradas 2 sesiones guardadas
+2025-07-21T04:40:14.807Z [32minfo[39m: 🔄 Procesando lote 1/1
+2025-07-21T04:40:14.807Z [32minfo[39m: [b85cd432] 🔄 Restaurando sesión...
+2025-07-21T04:40:14.808Z [32minfo[39m: [b85cd432] 🆕 Creando nueva sesión WhatsApp...
+2025-07-21T04:40:14.809Z [33mwarn[39m: [b85cd432] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+2025-07-21T04:40:14.809Z [32minfo[39m: [b85cd432] Usando Chromium de Puppeteer
+2025-07-21T04:40:14.810Z [32minfo[39m: [b85cd432] 🚀 Inicializando sesión asíncronamente...
+2025-07-21T04:40:14.810Z [32minfo[39m: [b85cd432] 🚀 Inicializando sesión...
+2025-07-21T04:40:14.811Z [32minfo[39m: [c50982b0] 🔄 Restaurando sesión...
+2025-07-21T04:40:14.811Z [32minfo[39m: [c50982b0] 🆕 Creando nueva sesión WhatsApp...
+2025-07-21T04:40:14.812Z [33mwarn[39m: [c50982b0] No se encontró ejecutable de Chrome/Chromium, usando por defecto
+2025-07-21T04:40:14.813Z [32minfo[39m: [c50982b0] Usando Chromium de Puppeteer
+2025-07-21T04:40:14.813Z [32minfo[39m: [c50982b0] 🚀 Inicializando sesión asíncronamente...
+2025-07-21T04:40:14.813Z [32minfo[39m: [c50982b0] 🚀 Inicializando sesión...
+2025-07-21T04:40:14.835Z [32minfo[39m: ✅ Restauración completada. 2 sesiones activas de 2 intentadas
+2025-07-21T04:40:14.839Z [32minfo[39m: 🚀 WhatsApp Multi-Session Server corriendo en http://localhost:8083
+2025-07-21T04:40:14.839Z [32minfo[39m: 📱 Sistema de sesiones múltiples ACTIVADO
+2025-07-21T04:40:14.839Z [32minfo[39m: 🔧 Máximo 50 sesiones simultáneas
+2025-07-21T04:40:14.839Z [32minfo[39m: 📊 Dashboard: http://localhost:8083
+2025-07-21T04:40:14.839Z [32minfo[39m: 📋 Sesiones: http://localhost:8083/sessions
+[2025-07-21T04:40:19.414Z] INFO: Iniciando servidor con preservación de sesiones...
+[2025-07-21T04:40:19.433Z] INFO: Encontradas 1 sesiones para restaurar
+[2025-07-21T04:40:19.433Z] INFO: Restaurando sesión: c50982b0-0d8e-48c0-bdc6-71b22135f1f6, teléfono: No disponible
+[2025-07-21T04:40:19.439Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T04:40:19.440Z] INFO: Modo de persistencia de sesiones: ACTIVADO
+[2025-07-21T04:40:19.445Z] INFO: Archivos temporales generales eliminados
+[2025-07-21T04:40:19.445Z] INFO: Procesos Chromium huérfanos terminados
+[2025-07-21T04:40:22.441Z] INFO: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Iniciando restauración...
+[2025-07-21T04:40:22.449Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error inicializando sesión restaurada: Failed to launch the browser process! spawn /usr/bin/chromium-browser ENOENT
+
+
+TROUBLESHOOTING: https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md
+
+[2025-07-21T04:40:22.450Z] INFO: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Reintento 1/2 de restauración...
+[2025-07-21T04:40:23.430Z] ERROR: Error eliminando sesión c50982b0-0d8e-48c0-bdc6-71b22135f1f6: Cannot read properties of null (reading 'close')
+[2025-07-21T04:40:25.667Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:40:26.675Z] ERROR: [cd328ce1-450b-477a-a582-1191bd880472] Error inicializando: Failed to launch the browser process! spawn /usr/bin/chromium-browser ENOENT
+
+
+TROUBLESHOOTING: https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md
+
+[2025-07-21T04:40:26.677Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:40:27.457Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error en reintento 1: Failed to launch the browser process! spawn /usr/bin/chromium-browser ENOENT
+
+
+TROUBLESHOOTING: https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md
+
+[2025-07-21T04:40:27.458Z] INFO: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Reintento 2/2 de restauración...
+[2025-07-21T04:40:37.469Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error en reintento 2: Failed to launch the browser process! spawn /usr/bin/chromium-browser ENOENT
+
+
+TROUBLESHOOTING: https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md
+
+[2025-07-21T04:40:37.470Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Máximo de reintentos alcanzado, marcando como fallida
+[2025-07-21T04:40:37.471Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:40:47.419Z] ERROR: Error eliminando sesión c50982b0-0d8e-48c0-bdc6-71b22135f1f6: Cannot read properties of null (reading 'close')
+[2025-07-21T04:40:50.029Z] ERROR: Error eliminando sesión cd328ce1-450b-477a-a582-1191bd880472: Cannot read properties of null (reading 'close')
+[2025-07-21T04:45:19.443Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:50:19.456Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:55:19.458Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:55:21.751Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:55:21.751Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:55:21.752Z] ERROR: [cd328ce1-450b-477a-a582-1191bd880472] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:55:21.753Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:55:21.973Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:55:21.974Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:55:21.974Z] ERROR: [cd328ce1-450b-477a-a582-1191bd880472] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:55:21.975Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:55:22.140Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:55:22.140Z] ERROR: [c50982b0-0d8e-48c0-bdc6-71b22135f1f6] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:55:22.140Z] ERROR: [cd328ce1-450b-477a-a582-1191bd880472] Error cerrando sesión: Cannot read properties of null (reading 'close')
+[2025-07-21T04:55:22.141Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:55:22.754Z] INFO: Proceso terminado correctamente
+[2025-07-21T04:58:57.853Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T04:58:57.855Z] INFO: Encontradas 2 sesiones para restaurar
+[2025-07-21T04:58:57.855Z] INFO: Omitiendo sesión c50982b0-0d8e-48c0-bdc6-71b22135f1f6 (estado: awaiting_restart)
+[2025-07-21T04:58:57.855Z] INFO: Omitiendo sesión cd328ce1-450b-477a-a582-1191bd880472 (estado: awaiting_restart)
+[2025-07-21T04:58:57.858Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T04:58:57.859Z] INFO: Modo Baileys: ACTIVADO
+[2025-07-21T04:59:08.443Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T04:59:08.453Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:08.844Z] WARN: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T04:59:08.846Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:09.850Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:11.906Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:13.879Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T04:59:13.958Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:14.104Z] WARN: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T04:59:14.105Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:15.996Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:18.043Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:19.136Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T04:59:19.457Z] WARN: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T04:59:19.459Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:20.087Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:22.142Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:24.200Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:24.493Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T04:59:24.664Z] WARN: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T04:59:24.666Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:26.257Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:27.864Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:29.692Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T04:59:29.864Z] WARN: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T04:59:29.866Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:29.917Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:31.969Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:33.656Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T04:59:33.658Z] INFO: Encontradas 1 sesiones para restaurar
+[2025-07-21T04:59:33.659Z] INFO: Restaurando sesión: 4eca83da-7e9a-4b6b-884a-3d0606e66317, teléfono: No disponible
+[2025-07-21T04:59:33.662Z] ERROR: Excepción no capturada: Error: listen EADDRINUSE: address already in use :::8083
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at Function.listen (C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\node_modules\express\lib\application.js:635:24)
+    at C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\main-baileys.js:1056:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-07-21T04:59:34.024Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:34.891Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T04:59:35.079Z] WARN: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T04:59:35.081Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:36.064Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:36.729Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T04:59:36.736Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:36.736Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Restauración iniciada
+[2025-07-21T04:59:37.168Z] WARN: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T04:59:37.169Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:37.517Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:59:37.518Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Sesión marcada para reinicio
+[2025-07-21T04:59:37.519Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:37.660Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:59:37.661Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Sesión marcada para reinicio
+[2025-07-21T04:59:37.662Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:38.088Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:59:38.088Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Sesión marcada para reinicio
+[2025-07-21T04:59:38.089Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:38.114Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:38.244Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:59:38.245Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Sesión marcada para reinicio
+[2025-07-21T04:59:38.246Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:38.388Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:59:38.389Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Sesión marcada para reinicio
+[2025-07-21T04:59:38.390Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:38.528Z] INFO: Proceso terminado correctamente
+[2025-07-21T04:59:38.541Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:59:38.541Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Sesión marcada para reinicio
+[2025-07-21T04:59:38.543Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:38.700Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T04:59:38.701Z] INFO: [4eca83da-7e9a-4b6b-884a-3d0606e66317] Sesión marcada para reinicio
+[2025-07-21T04:59:38.702Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T04:59:39.104Z] INFO: Proceso terminado correctamente
+[2025-07-21T04:59:42.373Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T04:59:42.375Z] INFO: Encontradas 1 sesiones para restaurar
+[2025-07-21T04:59:42.375Z] INFO: Omitiendo sesión 4eca83da-7e9a-4b6b-884a-3d0606e66317 (estado: awaiting_restart)
+[2025-07-21T04:59:42.378Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T04:59:42.378Z] INFO: Modo Baileys: ACTIVADO
+[2025-07-21T04:59:59.410Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T04:59:59.412Z] INFO: Encontradas 1 sesiones para restaurar
+[2025-07-21T04:59:59.412Z] INFO: Omitiendo sesión 4eca83da-7e9a-4b6b-884a-3d0606e66317 (estado: awaiting_restart)
+[2025-07-21T04:59:59.415Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T04:59:59.415Z] INFO: Modo Baileys: ACTIVADO
+[2025-07-21T05:00:03.327Z] INFO: [90513803-477b-4614-b387-66542b122968] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:00:03.335Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:03.668Z] WARN: [90513803-477b-4614-b387-66542b122968] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T05:00:03.670Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:04.437Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:06.482Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:08.531Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:08.701Z] INFO: [90513803-477b-4614-b387-66542b122968] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:00:09.090Z] WARN: [90513803-477b-4614-b387-66542b122968] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T05:00:09.092Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:10.587Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:12.644Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:14.125Z] INFO: [90513803-477b-4614-b387-66542b122968] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:00:14.312Z] WARN: [90513803-477b-4614-b387-66542b122968] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T05:00:14.314Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:14.692Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:16.745Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:18.796Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:19.365Z] INFO: [90513803-477b-4614-b387-66542b122968] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:00:19.755Z] WARN: [90513803-477b-4614-b387-66542b122968] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T05:00:19.757Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:20.852Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:22.907Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:24.787Z] INFO: [90513803-477b-4614-b387-66542b122968] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:00:24.958Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:25.340Z] WARN: [90513803-477b-4614-b387-66542b122968] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T05:00:25.341Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:27.011Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:29.055Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:30.371Z] INFO: [90513803-477b-4614-b387-66542b122968] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:00:30.660Z] WARN: [90513803-477b-4614-b387-66542b122968] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T05:00:30.662Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:31.101Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:33.152Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:35.201Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:35.694Z] INFO: [90513803-477b-4614-b387-66542b122968] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:00:35.917Z] WARN: [90513803-477b-4614-b387-66542b122968] Conexión cerrada debido a ReferenceError: crypto is not defined, reconectar: true
+[2025-07-21T05:00:35.919Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:37.254Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:39.308Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:39.785Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:00:39.786Z] INFO: [90513803-477b-4614-b387-66542b122968] Sesión marcada para reinicio
+[2025-07-21T05:00:39.787Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:39.946Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:00:39.946Z] INFO: [90513803-477b-4614-b387-66542b122968] Sesión marcada para reinicio
+[2025-07-21T05:00:39.947Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:40.481Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:00:40.482Z] INFO: [90513803-477b-4614-b387-66542b122968] Sesión marcada para reinicio
+[2025-07-21T05:00:40.482Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:40.633Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:00:40.633Z] INFO: [90513803-477b-4614-b387-66542b122968] Sesión marcada para reinicio
+[2025-07-21T05:00:40.634Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:40.777Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:00:40.778Z] INFO: [90513803-477b-4614-b387-66542b122968] Sesión marcada para reinicio
+[2025-07-21T05:00:40.779Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:40.787Z] INFO: Proceso terminado correctamente
+[2025-07-21T05:00:48.283Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T05:00:48.285Z] INFO: Encontradas 1 sesiones para restaurar
+[2025-07-21T05:00:48.285Z] INFO: Omitiendo sesión 90513803-477b-4614-b387-66542b122968 (estado: awaiting_restart)
+[2025-07-21T05:00:48.288Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T05:00:48.288Z] INFO: Modo Baileys: ACTIVADO
+[2025-07-21T05:00:56.271Z] INFO: [0ff5a263-870f-4d04-b321-9a91c35877fc] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:00:56.281Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:56.673Z] INFO: [0ff5a263-870f-4d04-b321-9a91c35877fc] Nuevo QR generado
+[2025-07-21T05:00:56.729Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:00:59.315Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:01:04.384Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:01:09.430Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:01:10.467Z] WARN: [0ff5a263-870f-4d04-b321-9a91c35877fc] Conexión cerrada debido a Error: Stream Errored (restart required), reconectar: true
+[2025-07-21T05:01:10.469Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:01:14.477Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:01:15.491Z] INFO: [0ff5a263-870f-4d04-b321-9a91c35877fc] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:01:16.645Z] INFO: [0ff5a263-870f-4d04-b321-9a91c35877fc] Conexión establecida
+[2025-07-21T05:01:16.647Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:01:23.335Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:01:34.041Z] WARN: Archivo Laravel .env no encontrado en: ../.env
+[2025-07-21T05:01:41.137Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:01:49.661Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:02:05.627Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:02:05.628Z] ERROR: [0ff5a263-870f-4d04-b321-9a91c35877fc] Error cerrando sesión: Connection Closed
+[2025-07-21T05:02:05.629Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:02:06.041Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:02:06.041Z] ERROR: [0ff5a263-870f-4d04-b321-9a91c35877fc] Error cerrando sesión: Connection Closed
+[2025-07-21T05:02:06.043Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:02:06.177Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:02:06.177Z] ERROR: [0ff5a263-870f-4d04-b321-9a91c35877fc] Error cerrando sesión: Connection Closed
+[2025-07-21T05:02:06.179Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:02:06.313Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:02:06.313Z] ERROR: [0ff5a263-870f-4d04-b321-9a91c35877fc] Error cerrando sesión: Connection Closed
+[2025-07-21T05:02:06.315Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:02:06.469Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:02:06.470Z] ERROR: [0ff5a263-870f-4d04-b321-9a91c35877fc] Error cerrando sesión: Connection Closed
+[2025-07-21T05:02:06.471Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:02:06.611Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:02:06.612Z] ERROR: [0ff5a263-870f-4d04-b321-9a91c35877fc] Error cerrando sesión: Connection Closed
+[2025-07-21T05:02:06.613Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:02:06.633Z] INFO: Proceso terminado correctamente
+[2025-07-21T05:02:19.233Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T05:02:19.235Z] INFO: Encontradas 1 sesiones para restaurar
+[2025-07-21T05:02:19.235Z] INFO: Omitiendo sesión 0ff5a263-870f-4d04-b321-9a91c35877fc (estado: awaiting_restart)
+[2025-07-21T05:02:19.238Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T05:02:19.238Z] INFO: Modo Baileys: ACTIVADO
+[2025-07-21T05:02:26.754Z] INFO: Encontradas 1 sesiones para restaurar
+[2025-07-21T05:02:26.754Z] INFO: Omitiendo sesión 0ff5a263-870f-4d04-b321-9a91c35877fc (estado: awaiting_restart)
+[2025-07-21T05:05:51.056Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:05:51.059Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:05:51.235Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:05:51.236Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:05:52.070Z] INFO: Proceso terminado correctamente
+[2025-07-21T05:05:57.289Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T05:05:57.291Z] INFO: Encontradas 0 sesiones para restaurar
+[2025-07-21T05:05:57.291Z] INFO: No hay sesiones válidas para restaurar
+[2025-07-21T05:05:57.294Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T05:05:57.294Z] INFO: Modo Baileys: ACTIVADO
+[2025-07-21T05:06:07.489Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:06:07.498Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:08.251Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Nuevo QR generado
+[2025-07-21T05:06:08.306Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:08.581Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:13.653Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:18.697Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:23.757Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:28.805Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:32.273Z] WARN: [cb574ac5-8c48-445e-822e-dd82049f0e30] Conexión cerrada debido a Error: Stream Errored (restart required), reconectar: true
+[2025-07-21T05:06:32.275Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:33.855Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:37.303Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:06:38.183Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Conexión establecida
+[2025-07-21T05:06:38.184Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:42.462Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:51.576Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:06:51.577Z] ERROR: [cb574ac5-8c48-445e-822e-dd82049f0e30] Error cerrando sesión: Connection Closed
+[2025-07-21T05:06:51.578Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:51.744Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:06:51.745Z] ERROR: [cb574ac5-8c48-445e-822e-dd82049f0e30] Error cerrando sesión: Connection Closed
+[2025-07-21T05:06:51.746Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:51.864Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:06:51.865Z] ERROR: [cb574ac5-8c48-445e-822e-dd82049f0e30] Error cerrando sesión: Connection Closed
+[2025-07-21T05:06:51.866Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:52.448Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:06:52.449Z] ERROR: [cb574ac5-8c48-445e-822e-dd82049f0e30] Error cerrando sesión: Connection Closed
+[2025-07-21T05:06:52.450Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:52.579Z] INFO: Proceso terminado correctamente
+[2025-07-21T05:06:54.782Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T05:06:54.783Z] INFO: Encontradas 1 sesiones para restaurar
+[2025-07-21T05:06:54.783Z] INFO: Restaurando 1 sesiones válidas...
+[2025-07-21T05:06:54.783Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Programando restauración (1/1)
+[2025-07-21T05:06:54.786Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T05:06:54.786Z] INFO: Modo Baileys: ACTIVADO
+[2025-07-21T05:06:59.797Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Iniciando restauración...
+[2025-07-21T05:06:59.853Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:06:59.863Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:06:59.863Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Restauración iniciada exitosamente
+[2025-07-21T05:07:00.700Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Conexión establecida
+[2025-07-21T05:07:00.701Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:11:54.803Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:12:54.833Z] WARN: [cb574ac5-8c48-445e-822e-dd82049f0e30] Sesión inactiva por 354s
+[2025-07-21T05:13:17.032Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:13:17.034Z] WARN: [cb574ac5-8c48-445e-822e-dd82049f0e30] Conexión cerrada debido a Error: Intentional Logout, reconectar: false
+[2025-07-21T05:13:17.036Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:13:17.036Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Sesión marcada para reinicio
+[2025-07-21T05:13:17.045Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:13:17.176Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:13:17.177Z] ERROR: [cb574ac5-8c48-445e-822e-dd82049f0e30] Error cerrando sesión: Connection Closed
+[2025-07-21T05:13:17.179Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:13:17.960Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:13:17.961Z] ERROR: [cb574ac5-8c48-445e-822e-dd82049f0e30] Error cerrando sesión: Connection Closed
+[2025-07-21T05:13:17.962Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:13:18.051Z] INFO: Proceso terminado correctamente
+[2025-07-21T05:13:19.788Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T05:13:19.790Z] INFO: Encontradas 1 sesiones para restaurar
+[2025-07-21T05:13:19.791Z] INFO: Restaurando 1 sesiones válidas...
+[2025-07-21T05:13:19.791Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Programando restauración (1/1)
+[2025-07-21T05:13:19.794Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T05:13:19.794Z] INFO: Modo Baileys: ACTIVADO
+[2025-07-21T05:13:24.795Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Iniciando restauración...
+[2025-07-21T05:13:24.853Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:13:24.864Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:13:24.864Z] INFO: [cb574ac5-8c48-445e-822e-dd82049f0e30] Restauración iniciada exitosamente
+[2025-07-21T05:13:27.220Z] WARN: [cb574ac5-8c48-445e-822e-dd82049f0e30] Conexión cerrada debido a Error: Connection Failure, reconectar: false
+[2025-07-21T05:13:27.222Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:13:53.246Z] ERROR: Error eliminando sesión cb574ac5-8c48-445e-822e-dd82049f0e30: Connection Closed
+[2025-07-21T05:13:59.636Z] INFO: [8af39cb1-6339-4892-a725-68bfa632cf2e] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:13:59.639Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:00.090Z] INFO: [8af39cb1-6339-4892-a725-68bfa632cf2e] Nuevo QR generado
+[2025-07-21T05:14:00.149Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:00.511Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:00.571Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:03.582Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:06.575Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:07.242Z] WARN: [8af39cb1-6339-4892-a725-68bfa632cf2e] Conexión cerrada debido a Error: Stream Errored (restart required), reconectar: true
+[2025-07-21T05:14:07.244Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:09.573Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:12.274Z] INFO: [8af39cb1-6339-4892-a725-68bfa632cf2e] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:14:12.573Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:13.987Z] INFO: [8af39cb1-6339-4892-a725-68bfa632cf2e] Conexión establecida
+[2025-07-21T05:14:13.989Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:15.588Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:15.599Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:16.042Z] INFO: [5135a34e-8720-4422-b809-22542f3662e9] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:14:16.045Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:16.620Z] INFO: [5135a34e-8720-4422-b809-22542f3662e9] Nuevo QR generado
+[2025-07-21T05:14:16.638Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:16.936Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:16.994Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:20.000Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:23.008Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:26.002Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:27.446Z] WARN: [5135a34e-8720-4422-b809-22542f3662e9] Conexión cerrada debido a Error: Stream Errored (restart required), reconectar: true
+[2025-07-21T05:14:27.448Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:29.001Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:32.011Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:32.472Z] INFO: [5135a34e-8720-4422-b809-22542f3662e9] Usando Baileys v2.3000.1023223821, última versión: true
+[2025-07-21T05:14:33.539Z] INFO: [5135a34e-8720-4422-b809-22542f3662e9] Conexión establecida
+[2025-07-21T05:14:33.540Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:34.996Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:36.259Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:49.486Z] WARN: Archivo Laravel .env no encontrado en: ../.env
+[2025-07-21T05:14:58.945Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:14:58.946Z] ERROR: [cb574ac5-8c48-445e-822e-dd82049f0e30] Error cerrando sesión: Connection Closed
+[2025-07-21T05:14:58.946Z] ERROR: [8af39cb1-6339-4892-a725-68bfa632cf2e] Error cerrando sesión: Connection Closed
+[2025-07-21T05:14:58.946Z] ERROR: [5135a34e-8720-4422-b809-22542f3662e9] Error cerrando sesión: Connection Closed
+[2025-07-21T05:14:58.947Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:59.121Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:14:59.121Z] ERROR: [cb574ac5-8c48-445e-822e-dd82049f0e30] Error cerrando sesión: Connection Closed
+[2025-07-21T05:14:59.121Z] ERROR: [8af39cb1-6339-4892-a725-68bfa632cf2e] Error cerrando sesión: Connection Closed
+[2025-07-21T05:14:59.121Z] ERROR: [5135a34e-8720-4422-b809-22542f3662e9] Error cerrando sesión: Connection Closed
+[2025-07-21T05:14:59.123Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:59.233Z] INFO: Interrupción recibida (SIGINT/Ctrl+C), apagando limpiamente...
+[2025-07-21T05:14:59.233Z] ERROR: [cb574ac5-8c48-445e-822e-dd82049f0e30] Error cerrando sesión: Connection Closed
+[2025-07-21T05:14:59.233Z] ERROR: [8af39cb1-6339-4892-a725-68bfa632cf2e] Error cerrando sesión: Connection Closed
+[2025-07-21T05:14:59.234Z] ERROR: [5135a34e-8720-4422-b809-22542f3662e9] Error cerrando sesión: Connection Closed
+[2025-07-21T05:14:59.235Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T05:14:59.963Z] INFO: Proceso terminado correctamente

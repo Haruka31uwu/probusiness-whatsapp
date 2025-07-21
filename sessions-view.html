@@ -252,26 +252,48 @@
                     html += '<div class="session-info">';
                     html += '<p><strong>📞 Teléfono:</strong> ' + phoneNumber + '</p>';
                     html += '<p><strong>🕒 Última actividad:</strong> ' + (session.lastActivity ? new Date(session.lastActivity).toLocaleString('es-ES') : 'Nunca') + '</p>';
-                    if (session.qrAvailable) {
-                        html += '<p><strong>📱 QR:</strong> <span style="color: #28a745;">Disponible</span></p>';
+                    
+                    // Mostrar información específica según el estado
+                    if (session.status === 'waiting_qr' || session.status === 'initializing') {
+                        html += '<p><strong>📱 Estado:</strong> <span style="color: #ffc107;">Esperando escaneo de QR</span></p>';
+                    } else if (session.status === 'loading') {
+                        html += '<p><strong>📱 Estado:</strong> <span style="color: #17a2b8;">Cargando sesión...</span></p>';
+                    } else if (session.status === 'restoring' || session.status === 'retry_restore') {
+                        html += '<p><strong>📱 Estado:</strong> <span style="color: #6f42c1;">Restaurando sesión...</span></p>';
+                    } else if (session.status === 'authenticated') {
+                        html += '<p><strong>📱 Estado:</strong> <span style="color: #28a745;">✅ Conectado y listo</span></p>';
+                    } else if (session.status === 'failed') {
+                        html += '<p><strong>📱 Estado:</strong> <span style="color: #dc3545;">❌ Error de conexión</span></p>';
                     }
+                    
                     html += '</div>';
                     html += '<div class="session-actions">';
                     
-                    if (session.qrAvailable) {
+                    // Mostrar botón QR para sesiones que necesitan autenticación
+                    if (session.status !== 'authenticated' && 
+                        (session.status === 'waiting_qr' || 
+                         session.status === 'initializing' || 
+                         session.status === 'loading' ||
+                         session.status === 'restoring' ||
+                         session.status === 'retry_restore')) {
                         html += '<a href="/api/sessions/' + session.sessionId + '/qr" target="_blank" class="btn btn-qr">📱 Ver QR</a>';
                     }
+                    
+                    // Mostrar botón de estado para sesiones autenticadas
+                    if (session.status === 'authenticated') {
+                        html += '<a href="/api/sessions/' + session.sessionId + '/qr" target="_blank" class="btn btn-status">📊 Ver Estado</a>';
+                    }
+                    
                     html += '<button onclick="regenerateQR(\'' + session.sessionId + '\')" class="btn btn-regenerate">🔄 Regenerar</button>';
                     html += '<button onclick="restartSession(\'' + session.sessionId + '\')" class="btn btn-restart">🔃 Reiniciar</button>';
                     html += '<button onclick="deleteSession(\'' + session.sessionId + '\')" class="btn btn-delete">🗑️ Eliminar</button>';
                     
-                    // Botones de asignación solo para sesiones listas
-                    if (session.isReady && phoneNumber !== 'No disponible') {
-                        html += '<div class="assignment-buttons">';
-                        html += '<button onclick="assignToSells(\'' + session.sessionId + '\')" class="btn btn-assign-sells">💰 Asignar a Ventas</button>';
-                        html += '<button onclick="assignToCoordination(\'' + session.sessionId + '\')" class="btn btn-assign-coord">🎯 Asignar a Coordinación</button>';
-                        html += '</div>';
-                    }
+                    // Botones de asignación para todas las sesiones
+                    html += '<div class="assignment-buttons">';
+                    html += '<button onclick="assignToSells(\'' + session.sessionId + '\')" class="btn btn-assign-sells">💰 Asignar a Ventas</button>';
+                    html += '<button onclick="assignToCoordination(\'' + session.sessionId + '\')" class="btn btn-assign-coord">🎯 Asignar a Coordinación</button>';
+                    html += '<button onclick="assignCustomNumber(\'' + session.sessionId + '\')" class="btn" style="background: #6f42c1; color: white;">📝 Asignar Número Específico</button>';
+                    html += '</div>';
                     
                     html += '</div></div>';
                 });
@@ -316,6 +338,42 @@
                 
                 if (response.ok) {
                     alert('✅ Número asignado a ' + typeName + ' exitosamente!');
+                    await loadEverything();
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        async function assignCustomNumber(sessionId) {
+            const session = findSessionById(sessionId);
+            const currentPhone = session ? (session.phoneNumber || '') : '';
+            
+            const type = prompt('¿A qué tipo asignar?\n1. ventas\n2. coordinacion\n\nEscribe "ventas" o "coordinacion":');
+            if (!type || !['ventas', 'coordinacion'].includes(type.toLowerCase())) {
+                alert('❌ Tipo inválido. Debe ser "ventas" o "coordinacion"');
+                return;
+            }
+            
+            const phoneNumber = prompt('Ingresa el número de teléfono (solo números):', currentPhone);
+            if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
+                alert('❌ Número inválido. Debe contener solo números');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/sessions/' + sessionId + '/assign-number', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: type.toLowerCase(), phoneNumber })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('✅ Número ' + phoneNumber + ' asignado a ' + type.toUpperCase() + ' exitosamente!');
                     await loadEverything();
                 } else {
                     throw new Error(data.error);
@@ -408,6 +466,35 @@
         
         // Auto-refresh cada 10 segundos
         setInterval(loadEverything, 10000);
+        
+        // Verificar estado de sesiones no autenticadas cada 5 segundos
+        setInterval(() => {
+            checkUnauthenticatedSessions();
+        }, 5000);
+        
+        function checkUnauthenticatedSessions() {
+            allSessions.forEach(session => {
+                if (session.status !== 'authenticated' && 
+                    (session.status === 'waiting_qr' || 
+                     session.status === 'initializing' || 
+                     session.status === 'loading' ||
+                     session.status === 'restoring' ||
+                     session.status === 'retry_restore')) {
+                    
+                    // Verificar si la sesión se autenticó
+                    fetch('/api/sessions/' + session.sessionId + '/status')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.authenticated && session.status !== 'authenticated') {
+                                console.log('Sesión autenticada:', session.sessionId);
+                                // Recargar la página para mostrar el nuevo estado
+                                setTimeout(() => loadEverything(), 1000);
+                            }
+                        })
+                        .catch(error => console.log('Error checking session status:', error));
+                }
+            });
+        }
     </script>
 </body>
 </html> 
