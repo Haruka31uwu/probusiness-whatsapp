@@ -332,6 +332,13 @@ const restorePreviousSessions = async () => {
 
         // Restaurar sesiones de forma escalonada para evitar sobrecarga
         for (const [index, info] of sessionsToRestore.entries()) {
+            // --- NUEVO: Evitar restaurar la misma sesión en paralelo ---
+            const existing = sessions.get(info.sessionId);
+            if (existing && ['restoring', 'authenticated', 'reconnecting', 'initializing'].includes(existing.status)) {
+                logger.warn(`[${info.sessionId}] Ya existe una restauración o sesión activa en curso (estado: ${existing.status}), omitiendo restauración duplicada.`);
+                continue;
+            }
+            // --- FIN NUEVO ---
             logger.info(`[${info.sessionId}] Programando restauración (${index + 1}/${sessionsToRestore.length})`);
 
             setTimeout(async () => {
@@ -1629,6 +1636,50 @@ app.get('/api/stats', (req, res) => {
 app.get('/sessions', (req, res) => {
     res.sendFile(path.join(__dirname, 'sessions-view.html'));
 });
+
+// --- NUEVO: Limpieza automática de sesiones no usadas ---
+const ACTIVE_SESSION_STATES = ['authenticated', 'reconnecting', 'restoring', 'initializing', 'loading', 'waiting_qr'];
+
+async function cleanUnusedSessions() {
+    try {
+        const sessionDirs = await fs.readdir(path.join(__dirname, 'sessions'));
+        const sessionInfo = fs.existsSync(SESSION_INFO_FILE)
+            ? JSON.parse(fs.readFileSync(SESSION_INFO_FILE, 'utf8'))
+            : [];
+        const activeSessionIds = new Set(
+            sessionInfo
+                .filter(info => ACTIVE_SESSION_STATES.includes(info.status))
+                .map(info => info.sessionId)
+        );
+        for (const dir of sessionDirs) {
+            const fullPath = path.join(__dirname, 'sessions', dir);
+            if (!activeSessionIds.has(dir)) {
+                logger.info(`[${dir}] Eliminando carpeta de sesión no activa: ${fullPath}`);
+                await fs.remove(fullPath);
+            }
+        }
+        // Limpiar también el Map de sesiones en memoria
+        for (const [sessionId, session] of sessions.entries()) {
+            if (!activeSessionIds.has(sessionId)) {
+                logger.info(`[${sessionId}] Eliminando sesión del Map (no activa)`);
+                sessions.delete(sessionId);
+            }
+        }
+        // Limpiar session-info.json de sesiones no activas
+        const filteredInfo = sessionInfo.filter(info => activeSessionIds.has(info.sessionId));
+        fs.writeFileSync(SESSION_INFO_FILE, JSON.stringify(filteredInfo, null, 2));
+        logger.info('Limpieza de sesiones no usadas completada.');
+    } catch (err) {
+        logger.error('Error limpiando sesiones no usadas: ' + err.message);
+    }
+}
+// --- FIN NUEVO ---
+
+// Llamar limpieza al inicio y cada 30 minutos
+(async () => {
+    await cleanUnusedSessions();
+    setInterval(cleanUnusedSessions, 30 * 60 * 1000);
+})();
 
 // 7. Inicialización
 (async () => {
