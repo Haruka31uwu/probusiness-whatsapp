@@ -54,7 +54,6 @@ class WhatsappWebSession {
                 dataPath: path.resolve(__dirname, `.wwebjs_auth`)
             }),
             puppeteer: this.getPuppeteerConfig(isLinux, tempDir),
-            authTimeoutMs: 0,
             qrMaxRetries: isLinux ? 5 : 3,
             restartOnAuthFail: true,
             takeoverOnConflict: true
