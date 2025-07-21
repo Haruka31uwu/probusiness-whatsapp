@@ -97,7 +97,6 @@ class WhatsappWebSession {
             '--disable-dev-shm-usage',
             '--no-first-run',
             '--no-zygote',
-            '--single-process',
             `--user-data-dir=${tempDir}`,
             '--disable-background-timer-throttling',
             '--disable-backgrounding-occluded-windows',
@@ -601,6 +600,12 @@ class WhatsappWebSession {
         this.retryCount++;
         this.lastRetryTime = Date.now();
         
+        // MANEJO ESPECÍFICO PARA Network.setUserAgentOverride
+        if (this.isNetworkUserAgentError(errorMessage)) {
+            this.logger.warn(`[${this.sessionId}] 🎯 Error específico Network.setUserAgentOverride (intento ${this.retryCount}/${this.maxRetries})`);
+            return await this.handleNetworkUserAgentError();
+        }
+        
         if (isNetworkError) {
             this.logger.warn(`[${this.sessionId}] 🌐 Error de red detectado (intento ${this.retryCount}/${this.maxRetries}): ${errorMessage}`);
         } else {
@@ -620,6 +625,45 @@ class WhatsappWebSession {
             'Target closed', 'Connection closed', 'Target.setAutoAttach'
         ];
         return protocolErrors.some(error => errorMessage.includes(error));
+    }
+
+    isNetworkUserAgentError(errorMessage) {
+        return errorMessage.includes('Network.setUserAgentOverride');
+    }
+
+    async handleNetworkUserAgentError() {
+        this.logger.warn(`[${this.sessionId}] 🎯 Error específico Network.setUserAgentOverride detectado. Aplicando solución específica...`);
+        
+        try {
+            // Limpiar completamente
+            if (this.client) {
+                try {
+                    await this.client.destroy();
+                } catch (e) {}
+            }
+            
+            await this.killRelatedProcesses();
+            await this.cleanupAllTempDirectories();
+            
+            // Pausa específica para este error
+            await new Promise(resolve => setTimeout(resolve, 8000));
+            
+            // Usar configuración ultra-agresiva inmediatamente
+            this.initializeClientUltraAggressive();
+            
+            // Intentar inicialización con timeout muy corto
+            await Promise.race([
+                this.client.initialize(),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('NetworkUserAgent timeout')), 30000))
+            ]);
+            
+            this.logger.info(`[${this.sessionId}] ✅ Solución específica para Network.setUserAgentOverride exitosa`);
+            return true;
+            
+        } catch (error) {
+            this.logger.error(`[${this.sessionId}] ❌ Solución específica falló: ${error.message}`);
+            return false;
+        }
     }
 
     async performLinuxRecovery(isNetworkError) {
@@ -642,7 +686,13 @@ class WhatsappWebSession {
                 }
             }
             
-            this.initializeClient();
+            // CONFIGURACIÓN MÁS AGRESIVA PARA ERRORES DE PROTOCOLO
+            if (this.retryCount >= 2) {
+                this.logger.info(`[${this.sessionId}] 🔧 Aplicando configuración ultra-agresiva para error de protocolo...`);
+                this.initializeClientUltraAggressive();
+            } else {
+                this.initializeClient();
+            }
             
             const initTimeout = 30000 + (this.retryCount * 10000);
             const initPromise = this.client.initialize();
@@ -760,7 +810,6 @@ class WhatsappWebSession {
                     '--disable-logging',
                     '--enable-automation',
                     '--disable-blink-features=AutomationControlled',
-                    '--remote-debugging-port=0',
                     `--user-data-dir=${tempDir}`,
                     ...(isLinux ? [
                         '--disable-namespace-sandbox',
@@ -793,6 +842,119 @@ class WhatsappWebSession {
                 } : {})
             },
             qrMaxRetries: 3,
+            restartOnAuthFail: true,
+            takeoverOnConflict: true
+        };
+
+        this.client = new Client(clientOptions);
+        this.setupEventListeners();
+    }
+
+    initializeClientUltraAggressive() {
+        const isLinux = process.platform === 'linux';
+        const tempDir = isLinux ? `/tmp/chrome-profile-${this.sessionId}-ultra` : `./temp-chrome-${this.sessionId}-ultra`;
+        
+        this.cleanupPreviousSession(tempDir);
+        
+        const clientOptions = {
+            authStrategy: new LocalAuth({
+                clientId: this.sessionId,
+                dataPath: path.resolve(__dirname, `.wwebjs_auth`)
+            }),
+            puppeteer: {
+                args: [
+                    // CONFIGURACIÓN ULTRA-MÍNIMA PARA EVITAR ERRORES DE PROTOCOLO
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
+                    `--user-data-dir=${tempDir}`,
+                    '--disable-extensions',
+                    '--disable-plugins',
+                    '--disable-sync',
+                    '--disable-default-apps',
+                    '--disable-background-networking',
+                    '--disable-background-timer-throttling',
+                    '--disable-backgrounding-occluded-windows',
+                    '--disable-renderer-backgrounding',
+                    '--disable-features=TranslateUI',
+                    '--disable-ipc-flooding-protection',
+                    '--disable-component-extensions-with-background-pages',
+                    '--disable-domain-reliability',
+                    '--disable-client-side-phishing-detection',
+                    '--disable-hang-monitor',
+                    '--disable-prompt-on-repost',
+                    '--memory-pressure-off',
+                    '--max_old_space_size=128', // Reducido aún más
+                    '--aggressive-cache-discard',
+                    '--disable-gpu',
+                    '--disable-software-rasterizer',
+                    '--force-device-scale-factor=1',
+                    '--disable-web-security',
+                    '--disable-logging',
+                    '--enable-automation',
+                    '--disable-blink-features=AutomationControlled',
+                    '--remote-debugging-port=0',
+                    // CONFIGURACIONES ESPECÍFICAS PARA Network.setUserAgentOverride
+                    '--disable-features=VizDisplayCompositor,BlinkGenPropertyTrees,TranslateUI',
+                    '--disable-background-media-suspend',
+                    '--disable-field-trial-config',
+                    '--disable-search-engine-choice-screen',
+                    '--disable-sync-preferences',
+                    '--disable-component-update',
+                    '--metrics-recording-only',
+                    '--force-color-profile=srgb',
+                    '--disable-namespace-sandbox',
+                    '--disable-gpu-sandbox',
+                    '--disk-cache-size=0',
+                    '--media-cache-size=0',
+                    '--disable-print-preview',
+                    '--no-default-browser-check',
+                    '--disable-translate',
+                    '--password-store=basic',
+                    '--use-mock-keychain',
+                    '--host-resolver-rules="MAP *.whatsapp.net 157.240.0.53"',
+                    '--enable-tcp-fast-open',
+                    '--enable-simple-cache-backend',
+                    '--process-per-site',
+                    // CONFIGURACIONES ADICIONALES PARA ESTABILIDAD
+                    '--disable-features=NetworkService',
+                    '--disable-background-media-suspend',
+                    '--disable-features=TranslateUI,BlinkGenPropertyTrees',
+                    '--disable-ipc-flooding-protection',
+                    '--disable-renderer-backgrounding',
+                    '--disable-background-timer-throttling',
+                    '--disable-backgrounding-occluded-windows',
+                    '--disable-field-trial-config',
+                    '--disable-search-engine-choice-screen',
+                    '--disable-sync-preferences',
+                    '--disable-default-apps',
+                    '--disable-background-networking',
+                    '--disable-component-extensions-with-background-pages',
+                    '--disable-domain-reliability',
+                    '--disable-client-side-phishing-detection',
+                    '--disable-prompt-on-repost',
+                    '--disable-sync-preferences',
+                    '--aggressive-cache-discard',
+                    '--force-device-scale-factor=1'
+                ],
+                headless: true,
+                timeout: 45000, // Reducido para ser más agresivo
+                protocolTimeout: 60000, // Reducido para ser más agresivo
+                defaultViewport: { width: 1280, height: 720 },
+                ignoreHTTPSErrors: true,
+                ignoreDefaultArgs: ['--disable-extensions', '--enable-automation'],
+                slowMo: 0,
+                devtools: false,
+                pipe: true,
+                dumpio: false,
+                handleSIGINT: false,
+                handleSIGTERM: false,
+                handleSIGHUP: false
+            },
+            qrMaxRetries: 2, // Reducido para ser más agresivo
             restartOnAuthFail: true,
             takeoverOnConflict: true
         };
@@ -846,8 +1008,10 @@ class WhatsappWebSession {
         const tempDirs = [
             `/tmp/chrome-profile-${this.sessionId}`,
             `/tmp/chrome-profile-${this.sessionId}-minimal`,
+            `/tmp/chrome-profile-${this.sessionId}-ultra`,
             `./temp-chrome-${this.sessionId}`,
-            `./temp-chrome-${this.sessionId}-minimal`
+            `./temp-chrome-${this.sessionId}-minimal`,
+            `./temp-chrome-${this.sessionId}-ultra`
         ];
         
         tempDirs.forEach(dir => {
