@@ -984,36 +984,49 @@ class WhatsappWebSession {
         const clientOptions = {
             authStrategy: new LocalAuth({
                 clientId: this.sessionId,
-                dataPath: path.resolve(__dirname, `.wwebjs_auth`)
+                dataPath: path.resolve(__dirname, `.wwebjs_auth`),
+                restartOnAuthFail: true,
             }),
             puppeteer: {
+                executablePath: '/usr/bin/chromium-browser',
                 args: [
                     '--no-sandbox',
-                  
-                    `--user-data-dir=${tempDir}`,
-                    ...(isLinux ? [
-                        
-                    ] : [])
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-gpu',
+                    '--disable-extensions',
+                    '--disable-application-cache',
+                    '--disable-component-extensions-with-background-pages',
+                    '--disable-default-apps',
+                    '--disable-sync',
+                    '--no-default-browser-check',
+                    '--no-first-run',
+                    '--disable-features=LockProfileCookieDatabase',
+                    '--disable-features=IsolateOrigins',
+                    '--disable-features=site-per-process',
+                    '--disable-features=TranslateUI',
+                    '--ignore-certificate-errors',
+                    '--ignore-ssl-errors',
+                    '--single-process',
+                    '--no-zygote',
+                    '--user-data-dir=' + tempDir,
+                    `--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.${Math.floor(Math.random() * 10000)}.0 Safari/537.36 Edg/123.0.${Math.floor(Math.random() * 1000)}.0`
                 ],
                 headless: true,
-                timeout: 90000,
-                protocolTimeout: 120000,
-                defaultViewport: { width: 1280, height: 720 },
-                ignoreHTTPSErrors: true,
-                ignoreDefaultArgs: ['--disable-extensions', '--enable-automation'],
-                slowMo: 0,
-                devtools: false,
-                ...(isLinux ? {
-                    pipe: true,
-                    dumpio: false,
-                    handleSIGINT: false,
-                    handleSIGTERM: false,
-                    handleSIGHUP: false
-                } : {})
+                timeout: isRestore ? 120000 : 90000, // Incrementar timeout para restauración
+                devtools: false
             },
-            qrMaxRetries: 3,
+            webVersionCache: {
+                type: 'none' // Desactivar caché de versión web
+            },
+            takeoverOnConflict: true, // Permitir toma de control al restaurar una sesión
+            qrMaxRetries: isRestore ? 0 : 3, // No generar QR para sesiones restauradas
+            authTimeoutMs: isRestore ? 90000 : 60000, // Más tiempo para restaurar
+            linkingMethod: 'promptStandard',
+            userAgent: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.${Math.floor(Math.random() * 10000)}.0 Safari/537.36 Edg/123.0.${Math.floor(Math.random() * 1000)}.0`,
             restartOnAuthFail: true,
-            takeoverOnConflict: true
+            webVersion: '2.2414.6' // Mantener versión web fija para consistencia
+
         };
 
         this.client = new Client(clientOptions);
