@@ -25,6 +25,11 @@ class WhatsappWebSession {
         this.readyAt = null;
         this.authToReadyDuration = null;
         
+        // VARIABLES PARA CONTROL DE REINTENTOS
+        this.retryCount = 0;
+        this.maxRetries = 3;
+        this.lastRetryTime = null;
+        
         this.initializeClient();
     }
 
@@ -127,7 +132,22 @@ class WhatsappWebSession {
                     '--disable-prompt-on-repost',
                     '--disable-sync-preferences',
                     '--aggressive-cache-discard',
-                    '--force-device-scale-factor=1'
+                    '--force-device-scale-factor=1',
+                    
+                    // CONFIGURACIONES DE RED Y DNS PARA ESTABILIDAD
+                    '--disable-features=VizDisplayCompositor',
+                    '--disable-background-media-suspend',
+                    '--disable-features=TranslateUI,BlinkGenPropertyTrees',
+                    '--disable-ipc-flooding-protection',
+                    '--disable-renderer-backgrounding',
+                    '--disable-background-timer-throttling',
+                    '--disable-backgrounding-occluded-windows',
+                    
+                    // CONFIGURACIONES ESPECÍFICAS PARA PROBLEMAS DE DNS
+                    '--host-resolver-rules="MAP *.whatsapp.net 157.240.0.53"',
+                    '--enable-tcp-fast-open',
+                    '--enable-simple-cache-backend',
+                    '--process-per-site'
                 ] : [
                     // CONFIGURACIÓN PARA WINDOWS/MAC (mantener original)
                     '--no-first-run',
@@ -180,10 +200,11 @@ class WhatsappWebSession {
             
             // CONFIGURACIÓN ESPECÍFICA PARA ACELERAR CARGA POST-AUTH
             ...(isLinux ? {
-                webVersionCache: {
-                    type: 'remote',
-                    remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html',
-                },
+                // DESHABILITAR webVersionCache PARA EVITAR ERRORES DE RED
+                // webVersionCache: {
+                //     type: 'remote',
+                //     remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html',
+                // },
                 bypassCSP: true,
                 proxyAuthentication: undefined
             } : {})
@@ -588,6 +609,44 @@ class WhatsappWebSession {
                 }
             }
             
+            // MANEJO ESPECÍFICO PARA ERRORES DE RED
+            if (errorMessage.includes('ECONNRESET') || 
+                errorMessage.includes('ENOTFOUND') ||
+                errorMessage.includes('EAI_AGAIN') ||
+                errorMessage.includes('getaddrinfo') ||
+                errorMessage.includes('FetchError')) {
+                
+                this.logger.warn(`[${this.sessionId}] 🌐 Error de red detectado: ${errorMessage}`);
+                
+                if (process.platform === 'linux') {
+                    this.logger.info(`[${this.sessionId}] 🔄 Reintentando después de error de red...`);
+                    
+                    // Pausa más larga para errores de red
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    
+                    // Limpiar y reintentar
+                    try {
+                        if (this.client) {
+                            await this.client.destroy();
+                        }
+                    } catch (destroyError) {
+                        this.logger.debug(`[${this.sessionId}] Error destruyendo cliente: ${destroyError.message}`);
+                    }
+                    
+                    this.initializeClient();
+                    
+                    try {
+                        await this.client.initialize();
+                        this.logger.info(`[${this.sessionId}] ✅ Reintento exitoso después de error de red`);
+                        return this;
+                    } catch (retryError) {
+                        this.logger.error(`[${this.sessionId}] ❌ Error en reintento de red: ${retryError.message}`);
+                        this.status = 'failed';
+                        throw retryError;
+                    }
+                }
+            }
+            
             this.logger.error(`[${this.sessionId}] ❌ Error inicializando: ${errorMessage}`);
             this.status = 'failed';
             throw error;
@@ -682,18 +741,44 @@ class WhatsappWebSession {
     async handleProtocolError(error) {
         const errorMessage = error.message || error.toString();
         
-        // DETECTAR ERRORES DE PROTOCOLO ESPECÍFICOS
+        // VERIFICAR LÍMITE DE REINTENTOS
+        if (this.retryCount >= this.maxRetries) {
+            this.logger.error(`[${this.sessionId}] 🚫 Límite de reintentos alcanzado (${this.maxRetries}). Deteniendo recuperación automática.`);
+            this.status = 'failed';
+            return false;
+        }
+        
+        // DETECTAR ERRORES DE PROTOCOLO Y RED ESPECÍFICOS
         const isProtocolError = errorMessage.includes('Network.setUserAgentOverride') ||
                                errorMessage.includes('Session closed') ||
                                errorMessage.includes('Protocol error') ||
                                errorMessage.includes('Target closed') ||
-                               errorMessage.includes('Connection closed');
+                               errorMessage.includes('Connection closed') ||
+                               errorMessage.includes('Target.setAutoAttach');
         
-        if (!isProtocolError) {
-            return false; // No es un error de protocolo
+        // DETECTAR ERRORES DE RED
+        const isNetworkError = errorMessage.includes('ECONNRESET') ||
+                              errorMessage.includes('ENOTFOUND') ||
+                              errorMessage.includes('EAI_AGAIN') ||
+                              errorMessage.includes('getaddrinfo') ||
+                              errorMessage.includes('FetchError') ||
+                              errorMessage.includes('net::ERR_NAME_NOT_RESOLVED') ||
+                              errorMessage.includes('net::ERR_CONNECTION_RESET') ||
+                              errorMessage.includes('net::ERR_CONNECTION_TIMED_OUT');
+        
+        if (!isProtocolError && !isNetworkError) {
+            return false; // No es un error de protocolo ni de red
         }
         
-        this.logger.warn(`[${this.sessionId}] 🔧 Error de protocolo detectado: ${errorMessage}`);
+        // INCREMENTAR CONTADOR DE REINTENTOS
+        this.retryCount++;
+        this.lastRetryTime = Date.now();
+        
+        if (isNetworkError) {
+            this.logger.warn(`[${this.sessionId}] 🌐 Error de red detectado (intento ${this.retryCount}/${this.maxRetries}): ${errorMessage}`);
+        } else {
+            this.logger.warn(`[${this.sessionId}] 🔧 Error de protocolo detectado (intento ${this.retryCount}/${this.maxRetries}): ${errorMessage}`);
+        }
         
         // ESTRATEGIAS DE RECUPERACIÓN PARA LINUX
         if (process.platform === 'linux') {
@@ -701,14 +786,33 @@ class WhatsappWebSession {
                 // Estrategia 1: Limpiar recursos y reintentar
                 this.logger.info(`[${this.sessionId}] 🔄 Aplicando estrategia de recuperación para Linux...`);
                 
-                // Limpiar procesos huérfanos
+                // Limpiar procesos huérfanos más agresivamente
                 const { exec } = require('child_process');
-                exec(`pkill -f "chromium.*${this.sessionId}"`, (err) => {
-                    if (!err) this.logger.debug(`[${this.sessionId}] Procesos Chromium limpiados`);
+                exec(`pkill -9 -f "chromium.*${this.sessionId}"`, (err) => {
+                    if (!err) this.logger.debug(`[${this.sessionId}] Procesos Chromium terminados (force)`);
                 });
                 
-                // Pausa para estabilizar
-                await new Promise(resolve => setTimeout(resolve, 3000));
+                // Limpiar también procesos de Chrome
+                exec(`pkill -9 -f "chrome.*${this.sessionId}"`, (err) => {
+                    if (!err) this.logger.debug(`[${this.sessionId}] Procesos Chrome terminados (force)`);
+                });
+                
+                // Pausa progresiva (más tiempo en cada reintento)
+                const basePauseTime = isNetworkError ? 5000 : 3000;
+                const progressivePause = basePauseTime + (this.retryCount * 2000);
+                this.logger.info(`[${this.sessionId}] ⏳ Pausando ${progressivePause/1000}s para estabilizar (intento ${this.retryCount})...`);
+                await new Promise(resolve => setTimeout(resolve, progressivePause));
+                
+                // Limpieza más agresiva de directorios temporales
+                const tempDir = `/tmp/chrome-profile-${this.sessionId}`;
+                if (fs.existsSync(tempDir)) {
+                    try {
+                        fs.rmSync(tempDir, { recursive: true, force: true });
+                        this.logger.debug(`[${this.sessionId}] Directorio temporal eliminado`);
+                    } catch (err) {
+                        this.logger.debug(`[${this.sessionId}] Error eliminando directorio temporal: ${err.message}`);
+                    }
+                }
                 
                 // Recrear cliente con configuración más estable
                 if (this.client) {
@@ -721,18 +825,156 @@ class WhatsappWebSession {
                 
                 this.initializeClient();
                 
-                // Reintentar inicialización
-                await this.client.initialize();
-                this.logger.info(`[${this.sessionId}] ✅ Recuperación exitosa después de error de protocolo`);
+                // Reintentar inicialización con timeout más corto
+                const initTimeout = 30000 + (this.retryCount * 10000); // Timeout progresivo
+                const initPromise = this.client.initialize();
+                const timeoutPromise = new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error('Initialization timeout')), initTimeout)
+                );
+                
+                await Promise.race([initPromise, timeoutPromise]);
+                this.logger.info(`[${this.sessionId}] ✅ Recuperación exitosa después de ${isNetworkError ? 'error de red' : 'error de protocolo'} (intento ${this.retryCount})`);
                 return true;
                 
             } catch (recoveryError) {
-                this.logger.error(`[${this.sessionId}] ❌ Error en recuperación: ${recoveryError.message}`);
+                this.logger.error(`[${this.sessionId}] ❌ Error en recuperación (intento ${this.retryCount}): ${recoveryError.message}`);
+                
+                // Si es el último intento, intentar estrategia de fallback
+                if (this.retryCount >= this.maxRetries) {
+                    this.logger.warn(`[${this.sessionId}] 🚨 Intentando estrategia de fallback...`);
+                    return await this.fallbackStrategy();
+                }
+                
                 return false;
             }
         }
         
         return false;
+    }
+
+    async fallbackStrategy() {
+        this.logger.warn(`[${this.sessionId}] 🚨 Ejecutando estrategia de fallback...`);
+        
+        try {
+            // ESTRATEGIA DE FALLBACK: Configuración mínima sin optimizaciones
+            this.logger.info(`[${this.sessionId}] 🔧 Recreando cliente con configuración mínima...`);
+            
+            // Limpiar completamente
+            if (this.client) {
+                try {
+                    await this.client.destroy();
+                } catch (e) {}
+            }
+            
+            // Limpiar todos los procesos relacionados
+            const { exec } = require('child_process');
+            exec(`pkill -9 -f "chromium.*${this.sessionId}"`, () => {});
+            exec(`pkill -9 -f "chrome.*${this.sessionId}"`, () => {});
+            
+            // Pausa larga
+            await new Promise(resolve => setTimeout(resolve, 10000));
+            
+            // Recrear con configuración mínima
+            this.initializeClientMinimal();
+            
+            // Intentar inicialización con timeout muy largo
+            await Promise.race([
+                this.client.initialize(),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Fallback timeout')), 120000))
+            ]);
+            
+            this.logger.info(`[${this.sessionId}] ✅ Estrategia de fallback exitosa`);
+            return true;
+            
+        } catch (fallbackError) {
+            this.logger.error(`[${this.sessionId}] ❌ Estrategia de fallback falló: ${fallbackError.message}`);
+            this.status = 'failed';
+            return false;
+        }
+    }
+
+    initializeClientMinimal() {
+        const isLinux = process.platform === 'linux';
+        const tempDir = isLinux ? `/tmp/chrome-profile-${this.sessionId}-minimal` : `./temp-chrome-${this.sessionId}-minimal`;
+        
+        // CONFIGURACIÓN MÍNIMA PARA FALLBACK
+        const clientOptions = {
+            authStrategy: new LocalAuth({
+                clientId: this.sessionId,
+                dataPath: path.resolve(__dirname, `.wwebjs_auth`)
+            }),
+            puppeteer: {
+                args: [
+                    // SOLO LO ABSOLUTAMENTE ESENCIAL
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--no-first-run',
+                    '--disable-extensions',
+                    '--disable-plugins',
+                    '--disable-sync',
+                    '--disable-default-apps',
+                    '--disable-background-networking',
+                    '--disable-background-timer-throttling',
+                    '--disable-backgrounding-occluded-windows',
+                    '--disable-renderer-backgrounding',
+                    '--disable-features=TranslateUI',
+                    '--disable-ipc-flooding-protection',
+                    '--disable-component-extensions-with-background-pages',
+                    '--disable-domain-reliability',
+                    '--disable-client-side-phishing-detection',
+                    '--disable-hang-monitor',
+                    '--disable-prompt-on-repost',
+                    '--memory-pressure-off',
+                    '--max_old_space_size=256',
+                    '--aggressive-cache-discard',
+                    '--disable-gpu',
+                    '--disable-software-rasterizer',
+                    '--force-device-scale-factor=1',
+                    '--disable-web-security',
+                    '--disable-logging',
+                    '--enable-automation',
+                    '--disable-blink-features=AutomationControlled',
+                    '--remote-debugging-port=0',
+                    `--user-data-dir=${tempDir}`,
+                    ...(isLinux ? [
+                        '--disable-namespace-sandbox',
+                        '--disable-gpu-sandbox',
+                        '--disk-cache-size=0',
+                        '--media-cache-size=0',
+                        '--no-default-browser-check',
+                        '--disable-translate',
+                        '--password-store=basic',
+                        '--use-mock-keychain',
+                        '--disable-component-update',
+                        '--metrics-recording-only',
+                        '--force-color-profile=srgb'
+                    ] : [])
+                ],
+                headless: true,
+                timeout: 90000,
+                protocolTimeout: 120000,
+                defaultViewport: { width: 1280, height: 720 },
+                ignoreHTTPSErrors: true,
+                ignoreDefaultArgs: ['--disable-extensions', '--enable-automation'],
+                slowMo: 0,
+                devtools: false,
+                ...(isLinux ? {
+                    pipe: true,
+                    dumpio: false,
+                    handleSIGINT: false,
+                    handleSIGTERM: false,
+                    handleSIGHUP: false
+                } : {})
+            },
+            authTimeoutMs: 0,
+            qrMaxRetries: 3,
+            restartOnAuthFail: true,
+            takeoverOnConflict: true
+        };
+
+        this.client = new Client(clientOptions);
+        this.setupEventListeners();
     }
 
     async restart() {
@@ -813,7 +1055,13 @@ class WhatsappWebSession {
             authToReadyDuration: this.authToReadyDuration,
             waitingForReady: this.status === 'authenticated' && !this.isReady,
             currentWaitTime: this.authenticatedAt && !this.isReady ? 
-                Math.round((Date.now() - this.authenticatedAt) / 1000) : null
+                Math.round((Date.now() - this.authenticatedAt) / 1000) : null,
+            // INFORMACIÓN DE REINTENTOS
+            retryCount: this.retryCount,
+            maxRetries: this.maxRetries,
+            lastRetryTime: this.lastRetryTime,
+            retryStatus: this.retryCount > 0 ? 
+                `${this.retryCount}/${this.maxRetries} reintentos` : 'Sin reintentos'
         };
     }
 
