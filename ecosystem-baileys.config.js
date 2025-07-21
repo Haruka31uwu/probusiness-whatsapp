@@ -21,13 +21,13 @@ module.exports = {
         NODE_ENV: 'production',
         PORT: 8083,
         MAX_SESSIONS: 20,
-        LARAVEL_ENV_PATH: '../.env'
+        LARAVEL_ENV_PATH: '../redis-laravel/.env'
       },
       env_production: {
         NODE_ENV: 'production',
         PORT: 8083,
         MAX_SESSIONS: 20,
-        LARAVEL_ENV_PATH: '../.env'
+        LARAVEL_ENV_PATH: '../redis-laravel/.env'
       }
     }
   ]
