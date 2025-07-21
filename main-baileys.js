@@ -60,7 +60,7 @@ const sessions = new Map(); // { sessionId → { sock, qrData, status, lastActiv
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) });
 
 // Variables globales para asignaciones Laravel
-let laravelEnvPath = process.env.LARAVEL_ENV_PATH || '../.env';
+let laravelEnvPath = process.env.LARAVEL_ENV_PATH || '../redis-laravel/.env';
 const sessionAssignments = {
     sells: null,
     coordination: null
@@ -1164,8 +1164,8 @@ app.post('/api/assign-number', (req, res) => {
             return res.status(400).json({ error: 'Sesión no está lista' });
         }
 
-        const envKey = type === 'sells' ? 'WHATSAPP_VENTAS_URL' : 'WHATSAPP_COORDINACION_URL';
-        const url = sessionId ? `http://localhost:${port}/api/sessions/${sessionId}/send-message` : '';
+        const envKey = type === 'sells' ? 'SELLS_API_URL' : 'COORDINATION_API_URL';
+        const url = sessionId ? `https//whatsapp2.probusiness.pe/api/sessions/${sessionId}/send-message` : '';
         
         const success = updateLaravelEnv(envKey, url);
         

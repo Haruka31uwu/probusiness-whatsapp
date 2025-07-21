@@ -8,7 +8,6 @@
     "dev": "nodemon main.js"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.17.16",
     "baileys": "^6.7.16",
     "cors": "^2.8.5",
     "express": "^4.21.2",
