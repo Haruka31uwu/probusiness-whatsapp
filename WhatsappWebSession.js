@@ -333,7 +333,138 @@ class WhatsappWebSession {
         this.authenticatedAt = Date.now();
         
         await this.applyPostAuthOptimizations();
+        
+        // Forzar verificación de estado ready después de autenticación
+        this.logger.info(`[${this.sessionId}] 🔍 Iniciando verificación forzada de estado ready...`);
+        
+        // Verificación inmediata
+        setTimeout(() => this.forceReadyDetection(), 2000);
+        
+        // Verificaciones adicionales
+        setTimeout(() => this.forceReadyDetection(), 5000);
+        setTimeout(() => this.forceReadyDetection(), 10000);
+        setTimeout(() => this.forceReadyDetection(), 15000);
+        setTimeout(() => this.forceReadyDetection(), 20000);
+        
         this.scheduleReadyCheck();
+    }
+
+    async forceReadyDetection() {
+        if (this.isReady) {
+            return; // Ya está listo
+        }
+        
+        try {
+            this.logger.info(`[${this.sessionId}] 🔍 Verificando estado ready forzadamente...`);
+            
+            if (!this.client || !this.client.pupPage) {
+                this.logger.warn(`[${this.sessionId}] ⚠️ Cliente o página no disponible para verificación`);
+                return;
+            }
+            
+            const readyState = await this.client.pupPage.evaluate(() => {
+                const checks = {
+                    // Verificar si WhatsApp Web está cargado
+                    whatsappLoaded: window.location.href.includes('web.whatsapp.com') && 
+                                   !window.location.href.includes('loading'),
+                    
+                    // Verificar si el Store está disponible
+                    storeAvailable: !!(window.Store && window.Store.State),
+                    
+                    // Verificar si la conexión está establecida
+                    connectionEstablished: !!(window.Store && window.Store.Conn && window.Store.Conn.connected),
+                    
+                    // Verificar si los chats están cargados
+                    chatsLoaded: !!(window.Store && window.Store.Chat && window.Store.Chat.getModelsArray),
+                    
+                    // Verificar si la UI está lista
+                    uiReady: !!document.querySelector('[data-testid="chat-list"]'),
+                    
+                    // Verificar si el usuario está autenticado
+                    userAuthenticated: !!(window.Store && window.Store.State && window.Store.State.default && window.Store.State.default.me),
+                    
+                    // Verificar si la aplicación está lista
+                    appReady: !!(window.Store && window.Store.App && window.Store.App.ready)
+                };
+                
+                // Verificar si hay errores en la consola
+                const hasErrors = window.console && window.console.error && window.console.error.toString().includes('function');
+                
+                return {
+                    checks,
+                    overallReady: checks.whatsappLoaded && checks.storeAvailable && checks.connectionEstablished && checks.uiReady,
+                    currentUrl: window.location.href,
+                    hasErrors,
+                    timestamp: Date.now()
+                };
+            });
+            
+            this.logger.info(`[${this.sessionId}] 📊 Estado de WhatsApp:`, {
+                ready: readyState.overallReady,
+                checks: readyState.checks,
+                url: readyState.currentUrl
+            });
+            
+            // Si está listo pero no se disparó el evento, forzarlo
+            if (readyState.overallReady && !this.isReady) {
+                this.logger.warn(`[${this.sessionId}] 🔧 WhatsApp está listo pero no se disparó evento ready - FORZANDO`);
+                
+                // Forzar el estado ready
+                this.handleReady();
+                
+            } else if (!readyState.overallReady) {
+                this.logger.info(`[${this.sessionId}] ⏳ WhatsApp aún no está completamente listo`);
+                
+                // Si no está listo, intentar algunas optimizaciones
+                if (readyState.checks.whatsappLoaded && readyState.checks.storeAvailable) {
+                    await this.forceWhatsAppReady();
+                }
+            }
+            
+        } catch (error) {
+            this.logger.error(`[${this.sessionId}] ❌ Error en verificación forzada: ${error.message}`);
+        }
+    }
+
+    async forceWhatsAppReady() {
+        try {
+            await this.client.pupPage.evaluate(() => {
+                // Forzar la carga de componentes críticos
+                if (window.Store && window.Store.Chat) {
+                    try {
+                        window.Store.Chat.getModelsArray();
+                        console.log('Chats forzados a cargar');
+                    } catch (e) {}
+                }
+                
+                if (window.Store && window.Store.Conn) {
+                    try {
+                        window.Store.Conn.connected = true;
+                        console.log('Conexión forzada a true');
+                    } catch (e) {}
+                }
+                
+                if (window.Store && window.Store.App) {
+                    try {
+                        window.Store.App.ready = true;
+                        console.log('App forzada a ready');
+                    } catch (e) {}
+                }
+                
+                // Forzar la carga de la UI
+                if (document.querySelector('[data-testid="chat-list"]')) {
+                    document.querySelector('[data-testid="chat-list"]').style.display = 'block';
+                    console.log('UI forzada a mostrar');
+                }
+                
+                return 'optimizations_applied';
+            });
+            
+            this.logger.info(`[${this.sessionId}] 🚀 Optimizaciones forzadas aplicadas`);
+            
+        } catch (error) {
+            this.logger.warn(`[${this.sessionId}] ⚠️ Error aplicando optimizaciones forzadas: ${error.message}`);
+        }
     }
 
     async applyPostAuthOptimizations() {
@@ -425,6 +556,8 @@ class WhatsappWebSession {
     }
 
     handleReady() {
+        this.logger.info(`[${this.sessionId}] 🎉 EVENTO READY DISPARADO!`);
+        
         this.readyAt = Date.now();
         this.authToReadyDuration = this.authenticatedAt ? 
             Math.round((this.readyAt - this.authenticatedAt) / 1000) : null;
@@ -438,15 +571,90 @@ class WhatsappWebSession {
         this.lastActivity = Date.now();
         this.isAuthenticating = false;
         
-        if (this.client.info && this.client.info.wid) {
-            this.phoneNumber = this.client.info.wid.user;
-            this.logger.info(`[${this.sessionId}] 📞 Número conectado: ${this.phoneNumber}`);
-        }
+        // Intentar obtener el número de teléfono de múltiples formas
+        this.extractPhoneNumberWithRetry();
         
         this.logPerformanceMetrics();
         
         if (this.readyInstanceCallback) {
+            this.logger.info(`[${this.sessionId}] 📞 Llamando callback de sesión lista...`);
             this.readyInstanceCallback(this.sessionId, this);
+        }
+    }
+
+    async extractPhoneNumberWithRetry() {
+        let attempts = 0;
+        const maxAttempts = 5;
+        
+        const tryExtract = async () => {
+            attempts++;
+            this.logger.info(`[${this.sessionId}] 📞 Intento ${attempts}/${maxAttempts} de extraer número de teléfono...`);
+            
+            try {
+                // Método 1: Usar client.info
+                if (this.client && this.client.info && this.client.info.wid) {
+                    this.phoneNumber = this.client.info.wid.user;
+                    this.logger.info(`[${this.sessionId}] 📞 Número obtenido desde client.info: ${this.phoneNumber}`);
+                    return true;
+                }
+                
+                // Método 2: Intentar obtener desde la página
+                if (this.client && this.client.pupPage) {
+                    try {
+                        const phoneNumber = await this.client.pupPage.evaluate(() => {
+                            // Intentar múltiples métodos para obtener el número
+                            if (window.Store && window.Store.State && window.Store.State.default && window.Store.State.default.me) {
+                                return window.Store.State.default.me.id.user;
+                            }
+                            
+                            if (window.Store && window.Store.State && window.Store.State.default && window.Store.State.default.me && window.Store.State.default.me.id) {
+                                return window.Store.State.default.me.id.user;
+                            }
+                            
+                            // Buscar en el DOM
+                            const metaPhone = document.querySelector('meta[property="og:title"]');
+                            if (metaPhone && metaPhone.content) {
+                                return metaPhone.content.replace('WhatsApp', '').trim();
+                            }
+                            
+                            // Buscar en el título de la página
+                            if (document.title && document.title.includes('WhatsApp')) {
+                                const match = document.title.match(/(\d+)/);
+                                if (match) return match[1];
+                            }
+                            
+                            return null;
+                        });
+                        
+                        if (phoneNumber) {
+                            this.phoneNumber = phoneNumber;
+                            this.logger.info(`[${this.sessionId}] 📞 Número obtenido desde página: ${this.phoneNumber}`);
+                            return true;
+                        }
+                    } catch (e) {
+                        this.logger.debug(`[${this.sessionId}] Error obteniendo número desde página: ${e.message}`);
+                    }
+                }
+                
+                // Método 3: Esperar un poco y reintentar
+                if (attempts < maxAttempts) {
+                    this.logger.info(`[${this.sessionId}] ⏳ Esperando 2 segundos antes del siguiente intento...`);
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    return false;
+                }
+                
+                this.logger.warn(`[${this.sessionId}] ⚠️ No se pudo obtener el número de teléfono después de ${maxAttempts} intentos`);
+                return true; // Parar los intentos
+                
+            } catch (error) {
+                this.logger.error(`[${this.sessionId}] ❌ Error en intento ${attempts}: ${error.message}`);
+                return attempts >= maxAttempts; // Parar si es el último intento
+            }
+        };
+        
+        while (attempts < maxAttempts) {
+            const success = await tryExtract();
+            if (success) break;
         }
     }
 
@@ -781,47 +989,10 @@ class WhatsappWebSession {
             puppeteer: {
                 args: [
                     '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',
-                    '--no-first-run',
-                    '--disable-extensions',
-                    '--disable-plugins',
-                    '--disable-sync',
-                    '--disable-default-apps',
-                    '--disable-background-networking',
-                    '--disable-background-timer-throttling',
-                    '--disable-backgrounding-occluded-windows',
-                    '--disable-renderer-backgrounding',
-                    '--disable-features=TranslateUI',
-                    '--disable-ipc-flooding-protection',
-                    '--disable-component-extensions-with-background-pages',
-                    '--disable-domain-reliability',
-                    '--disable-client-side-phishing-detection',
-                    '--disable-hang-monitor',
-                    '--disable-prompt-on-repost',
-                    '--memory-pressure-off',
-                    '--max_old_space_size=256',
-                    '--aggressive-cache-discard',
-                    '--disable-gpu',
-                    '--disable-software-rasterizer',
-                    '--force-device-scale-factor=1',
-                    '--disable-web-security',
-                    '--disable-logging',
-                    '--enable-automation',
-                    '--disable-blink-features=AutomationControlled',
+                  
                     `--user-data-dir=${tempDir}`,
                     ...(isLinux ? [
-                        '--disable-namespace-sandbox',
-                        '--disable-gpu-sandbox',
-                        '--disk-cache-size=0',
-                        '--media-cache-size=0',
-                        '--no-default-browser-check',
-                        '--disable-translate',
-                        '--password-store=basic',
-                        '--use-mock-keychain',
-                        '--disable-component-update',
-                        '--metrics-recording-only',
-                        '--force-color-profile=srgb'
+                        
                     ] : [])
                 ],
                 headless: true,
