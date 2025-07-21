@@ -87,10 +87,19 @@ class WhatsappWebSession {
                     '--disable-web-security',
                     '--disable-logging',
                     
-                    // AUTOMATIZACIÓN
+                    // AUTOMATIZACIÓN - CONFIGURACIÓN ESTABLE PARA PREVENIR ERRORES DE PROTOCOLO
                     '--enable-automation',
                     '--disable-blink-features=AutomationControlled',
                     '--remote-debugging-port=0',
+                    '--disable-background-media-suspend',
+                    '--disable-features=VizDisplayCompositor',
+                    
+                    // CONFIGURACIONES ESPECÍFICAS PARA ESTABILIDAD DE PROTOCOLO
+                    '--disable-features=TranslateUI,BlinkGenPropertyTrees',
+                    '--disable-ipc-flooding-protection',
+                    '--disable-renderer-backgrounding',
+                    '--disable-background-timer-throttling',
+                    '--disable-backgrounding-occluded-windows',
                     
                     // LINUX HEADLESS ESPECÍFICO
                     '--disable-namespace-sandbox',
@@ -104,7 +113,21 @@ class WhatsappWebSession {
                     '--use-mock-keychain',
                     '--disable-component-update',
                     '--metrics-recording-only',
-                    '--force-color-profile=srgb'
+                    '--force-color-profile=srgb',
+                    
+                    // CONFIGURACIONES ADICIONALES PARA ESTABILIDAD
+                    '--disable-field-trial-config',
+                    '--disable-search-engine-choice-screen',
+                    '--disable-sync-preferences',
+                    '--disable-default-apps',
+                    '--disable-background-networking',
+                    '--disable-component-extensions-with-background-pages',
+                    '--disable-domain-reliability',
+                    '--disable-client-side-phishing-detection',
+                    '--disable-prompt-on-repost',
+                    '--disable-sync-preferences',
+                    '--aggressive-cache-discard',
+                    '--force-device-scale-factor=1'
                 ] : [
                     // CONFIGURACIÓN PARA WINDOWS/MAC (mantener original)
                     '--no-first-run',
@@ -498,10 +521,74 @@ class WhatsappWebSession {
     async initialize() {
         try {
             this.logger.info(`[${this.sessionId}] 🚀 Inicializando sesión...`);
+            
+            // CONFIGURACIÓN ESPECÍFICA PARA PREVENIR ERRORES DE PROTOCOLO EN LINUX
+            if (process.platform === 'linux') {
+                this.logger.info(`[${this.sessionId}] 🐧 Aplicando configuraciones de estabilidad para Linux...`);
+                
+                // Configurar timeouts más conservadores para Linux
+                if (this.client.pupPage) {
+                    try {
+                        await this.client.pupPage.setDefaultTimeout(30000); // 30s timeout
+                        await this.client.pupPage.setDefaultNavigationTimeout(45000); // 45s navigation
+                    } catch (e) {
+                        this.logger.debug(`[${this.sessionId}] Configuración de timeouts ignorada: ${e.message}`);
+                    }
+                }
+            }
+            
             await this.client.initialize();
             return this;
         } catch (error) {
-            this.logger.error(`[${this.sessionId}] ❌ Error inicializando: ${error.message}`);
+            const errorMessage = error.message || error.toString();
+            
+            // INTENTAR RECUPERACIÓN AUTOMÁTICA PARA ERRORES DE PROTOCOLO
+            const recoverySuccessful = await this.handleProtocolError(error);
+            if (recoverySuccessful) {
+                return this; // Recuperación exitosa
+            }
+            
+            // MANEJO ESPECÍFICO PARA ERRORES DE PROTOCOLO EN LINUX
+            if (errorMessage.includes('Network.setUserAgentOverride') || 
+                errorMessage.includes('Session closed') ||
+                errorMessage.includes('Most likely the page has been closed') ||
+                errorMessage.includes('Protocol error')) {
+                
+                this.logger.warn(`[${this.sessionId}] ⚠️ Error de protocolo detectado: ${errorMessage}`);
+                
+                // Verificar si es un problema de estabilidad en Linux
+                if (process.platform === 'linux') {
+                    this.logger.info(`[${this.sessionId}] 🔄 Reintentando con configuración más estable...`);
+                    
+                    // Limpiar recursos y reintentar
+                    try {
+                        if (this.client) {
+                            await this.client.destroy();
+                        }
+                    } catch (destroyError) {
+                        this.logger.debug(`[${this.sessionId}] Error destruyendo cliente: ${destroyError.message}`);
+                    }
+                    
+                    // Pequeña pausa antes de reintentar
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    // Recrear cliente con configuración más estable
+                    this.initializeClient();
+                    
+                    // Reintentar inicialización
+                    try {
+                        await this.client.initialize();
+                        this.logger.info(`[${this.sessionId}] ✅ Reintento exitoso después de error de protocolo`);
+                        return this;
+                    } catch (retryError) {
+                        this.logger.error(`[${this.sessionId}] ❌ Error en reintento: ${retryError.message}`);
+                        this.status = 'failed';
+                        throw retryError;
+                    }
+                }
+            }
+            
+            this.logger.error(`[${this.sessionId}] ❌ Error inicializando: ${errorMessage}`);
             this.status = 'failed';
             throw error;
         }
@@ -590,6 +677,62 @@ class WhatsappWebSession {
             this.logger.error(`[${this.sessionId}] ❌ Error verificando estado ready: ${error.message}`);
             throw error;
         }
+    }
+
+    async handleProtocolError(error) {
+        const errorMessage = error.message || error.toString();
+        
+        // DETECTAR ERRORES DE PROTOCOLO ESPECÍFICOS
+        const isProtocolError = errorMessage.includes('Network.setUserAgentOverride') ||
+                               errorMessage.includes('Session closed') ||
+                               errorMessage.includes('Protocol error') ||
+                               errorMessage.includes('Target closed') ||
+                               errorMessage.includes('Connection closed');
+        
+        if (!isProtocolError) {
+            return false; // No es un error de protocolo
+        }
+        
+        this.logger.warn(`[${this.sessionId}] 🔧 Error de protocolo detectado: ${errorMessage}`);
+        
+        // ESTRATEGIAS DE RECUPERACIÓN PARA LINUX
+        if (process.platform === 'linux') {
+            try {
+                // Estrategia 1: Limpiar recursos y reintentar
+                this.logger.info(`[${this.sessionId}] 🔄 Aplicando estrategia de recuperación para Linux...`);
+                
+                // Limpiar procesos huérfanos
+                const { exec } = require('child_process');
+                exec(`pkill -f "chromium.*${this.sessionId}"`, (err) => {
+                    if (!err) this.logger.debug(`[${this.sessionId}] Procesos Chromium limpiados`);
+                });
+                
+                // Pausa para estabilizar
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                // Recrear cliente con configuración más estable
+                if (this.client) {
+                    try {
+                        await this.client.destroy();
+                    } catch (destroyError) {
+                        this.logger.debug(`[${this.sessionId}] Error destruyendo cliente: ${destroyError.message}`);
+                    }
+                }
+                
+                this.initializeClient();
+                
+                // Reintentar inicialización
+                await this.client.initialize();
+                this.logger.info(`[${this.sessionId}] ✅ Recuperación exitosa después de error de protocolo`);
+                return true;
+                
+            } catch (recoveryError) {
+                this.logger.error(`[${this.sessionId}] ❌ Error en recuperación: ${recoveryError.message}`);
+                return false;
+            }
+        }
+        
+        return false;
     }
 
     async restart() {
