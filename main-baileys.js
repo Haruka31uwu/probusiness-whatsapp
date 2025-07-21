@@ -463,13 +463,40 @@ const restoreSessionWithRetry = async (sessionId, sessionInfo) => {
     }
 };
 
-// Función de monitoreo automático de sesiones
+// --- MEJORA 1: monitorAndRestoreSessions ---
+const forceReconnectTimeout = 15 * 60 * 1000; // 15 minutos para forzar reconexión
+
 const monitorAndRestoreSessions = async () => {
     try {
         const now = Date.now();
         const sessionTimeout = 5 * 60 * 1000; // 5 minutos sin actividad
 
         for (const [sessionId, session] of sessions.entries()) {
+            const inactiveTime = now - (session.lastActivity || 0);
+
+            // Forzar reconexión si la sesión lleva mucho tiempo inactiva
+            if (inactiveTime > forceReconnectTimeout) {
+                logger.warn(`[${sessionId}] Sesión inactiva por ${Math.floor(inactiveTime / 1000)}s, forzando reconexión...`);
+                try {
+                    if (session.sock) {
+                        await session.sock.logout().catch(() => {});
+                    }
+                    const newSock = await createBaileysClient(sessionId, true);
+                    sessions.set(sessionId, {
+                        sock: newSock,
+                        status: 'restoring',
+                        lastActivity: Date.now(),
+                        phoneNumber: session.phoneNumber,
+                        user: session.user
+                    });
+                    saveSessionInfo();
+                    logger.info(`[${sessionId}] Reconexión forzada exitosa`);
+                } catch (error) {
+                    logger.error(`[${sessionId}] Error en reconexión forzada: ${error.message}`);
+                }
+                continue;
+            }
+
             // Verificar sesiones que han estado inactivas por mucho tiempo
             if (session.lastActivity && (now - session.lastActivity) > sessionTimeout) {
                 logger.warn(`[${sessionId}] Sesión inactiva por ${Math.floor((now - session.lastActivity) / 1000)}s`);
@@ -551,6 +578,7 @@ const monitorAndRestoreSessions = async () => {
         logger.error(`Error en monitoreo automático: ${error.message}`);
     }
 };
+// --- FIN MEJORA 1 ---
 
 // 6. Endpoints
 app.post('/api/sessions', async (req, res) => {
@@ -576,21 +604,10 @@ app.post('/api/sessions', async (req, res) => {
     }
 });
 
+// --- MEJORA 2: Envío de mensajes con reconexión en caliente ---
 app.post('/api/sessions/:id/send-message', upload.single('archivo'), async (req, res) => {
     const sessionId = req.params.id;
-    const session = sessions.get(sessionId);
-
-    if (!session) {
-        return res.status(404).json({ error: 'Sesión no encontrada' });
-    }
-
-    if (session.status !== 'authenticated' || !session.sock || !session.sock.user) {
-        logger.warn(`[${sessionId}] Intento de envío con sesión no autenticada o socket desconectado.`);
-        return res.status(400).json({
-            error: 'La sesión no está autenticada o el socket no está conectado',
-            status: session.status
-        });
-    }
+    let session = sessions.get(sessionId);
 
     let { numero, mensaje } = req.body;
     const archivo = req.file;
@@ -598,63 +615,79 @@ app.post('/api/sessions/:id/send-message', upload.single('archivo'), async (req,
     if (!numero) {
         return res.status(400).json({ error: 'Falta el número de destino' });
     }
-
-    // Normalizar el número: quitar sufijos y asegurar formato correcto
-    numero = numero.replace(/@.*$/, ''); // Elimina cualquier sufijo como @c.us
+    numero = numero.replace(/@.*$/, '');
     const jid = `${numero}@s.whatsapp.net`;
 
-    try {
-        const sock = session.sock;
-
+    // Función auxiliar para intentar enviar el mensaje
+    async function trySend(sock) {
         if (archivo) {
             logger.info(`[${sessionId}] Recibido archivo: ${archivo.originalname}, tamaño: ${archivo.size}, tipo: ${archivo.mimetype}`);
-
             if (archivo.size > 15 * 1024 * 1024) {
                 return res.status(400).json({ error: 'El archivo es demasiado grande. WhatsApp tiene un límite de 16MB' });
             }
-
             const fileData = fs.readFileSync(archivo.path);
             const fileMimeType = archivo.mimetype || mime.lookup(archivo.path) || 'application/octet-stream';
             const fileName = archivo.originalname || `file_${Date.now()}${path.extname(archivo.originalname) || '.dat'}`;
-
-            // Enviar archivo con Baileys
             await sock.sendMessage(jid, {
                 document: fileData,
                 mimetype: fileMimeType,
                 fileName: fileName,
                 caption: mensaje || ''
             });
-
-            // Limpiar archivo temporal
-            try {
-                fs.unlinkSync(archivo.path);
-            } catch (err) {
-                logger.warn(`[${sessionId}] Error al eliminar archivo temporal: ${err.message}`);
-            }
-
-            return res.json({
-                success: true,
-                message: 'Archivo enviado con éxito',
-                sessionId,
-                destinatario: numero
-            });
+            try { fs.unlinkSync(archivo.path); } catch (err) { logger.warn(`[${sessionId}] Error al eliminar archivo temporal: ${err.message}`); }
+            return res.json({ success: true, message: 'Archivo enviado con éxito', sessionId, destinatario: numero });
         } else if (mensaje) {
             logger.info(`[${sessionId}] Enviando mensaje de texto a ${jid}`);
             await sock.sendMessage(jid, { text: mensaje });
-
-            return res.json({
-                success: true,
-                message: 'Mensaje de texto enviado con éxito',
-                sessionId,
-                destinatario: numero
-            });
+            return res.json({ success: true, message: 'Mensaje de texto enviado con éxito', sessionId, destinatario: numero });
         } else {
             return res.status(400).json({ error: 'Se requiere un mensaje o un archivo' });
         }
+    }
+
+    // Si la sesión no está lista, intentar reconectar una vez y reintentar el envío
+    if (!session || session.status !== 'authenticated' || !session.sock || !session.sock.user) {
+        logger.warn(`[${sessionId}] Intento de envío con sesión no autenticada o socket desconectado. Intentando reconectar...`);
+        try {
+            if (session && session.sock) {
+                await session.sock.logout().catch(() => {});
+            }
+            const newSock = await createBaileysClient(sessionId, true);
+            sessions.set(sessionId, {
+                ...session,
+                sock: newSock,
+                status: 'restoring',
+                lastActivity: Date.now()
+            });
+            saveSessionInfo();
+            // Esperar a que la sesión esté lista (máximo 10 segundos)
+            let ready = false;
+            for (let i = 0; i < 20; i++) {
+                await new Promise(r => setTimeout(r, 500));
+                session = sessions.get(sessionId);
+                if (session && session.status === 'authenticated' && session.sock && session.sock.user) {
+                    ready = true;
+                    break;
+                }
+            }
+            if (ready) {
+                logger.info(`[${sessionId}] Reconexión exitosa, reintentando envío...`);
+                return await trySend(session.sock);
+            } else {
+                logger.error(`[${sessionId}] No se pudo reconectar la sesión a tiempo.`);
+                return res.status(503).json({ error: 'No se pudo reconectar la sesión. Intente nuevamente en unos segundos.', sessionId, status: 'recovering' });
+            }
+        } catch (err) {
+            logger.error(`[${sessionId}] Error al reconectar y enviar: ${err.message}`);
+            return res.status(503).json({ error: 'Error al reconectar la sesión. Intente nuevamente.', sessionId, status: 'recovering' });
+        }
+    }
+
+    // Si la sesión está lista, intentar enviar normalmente
+    try {
+        return await trySend(session.sock);
     } catch (err) {
         logger.error(`[${sessionId}] Error al enviar el mensaje a ${jid}: ${err.message}`);
-
-        // Si es error de conexión, sugerir reintento tras reconexión
         if (err.message.includes('not-authorized') || err.message.includes('connection closed') || err.message.includes('Connection Closed') || err.message.includes('Timed Out')) {
             sessions.set(sessionId, {
                 ...session,
@@ -662,17 +695,12 @@ app.post('/api/sessions/:id/send-message', upload.single('archivo'), async (req,
                 lastActivity: Date.now()
             });
             saveSessionInfo();
-
-            return res.status(503).json({
-                error: 'Error temporal en la sesión. Se ha iniciado recuperación automática. Por favor, reintente en unos segundos.',
-                sessionId,
-                status: 'recovering'
-            });
+            return res.status(503).json({ error: 'Error temporal en la sesión. Se ha iniciado recuperación automática. Por favor, reintente en unos segundos.', sessionId, status: 'recovering' });
         }
-
         return res.status(500).json({ error: err.message });
     }
 });
+// --- FIN MEJORA 2 ---
 
 app.get('/api/sessions/:id/qr', async (req, res) => {
     const session = sessions.get(req.params.id);

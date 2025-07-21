@@ -251,6 +251,13 @@
                     html += '</div>';
                     html += '<div class="session-info">';
                     html += '<p><strong>📞 Teléfono:</strong> ' + phoneNumber + '</p>';
+                    // Badge de asignación
+                    if (currentAssignments.sells === session.sessionId) {
+                        html += '<p><span class="assignment-badge sells-badge">💰 VENTAS</span></p>';
+                    }
+                    if (currentAssignments.coordination === session.sessionId) {
+                        html += '<p><span class="assignment-badge coord-badge">🎯 COORDINACIÓN</span></p>';
+                    }
                     html += '<p><strong>🕒 Última actividad:</strong> ' + (session.lastActivity ? new Date(session.lastActivity).toLocaleString('es-ES') : 'Nunca') + '</p>';
                     
                     // Mostrar información específica según el estado
