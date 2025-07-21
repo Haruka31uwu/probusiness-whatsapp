@@ -584,23 +584,27 @@ app.post('/api/sessions/:id/send-message', upload.single('archivo'), async (req,
         return res.status(404).json({ error: 'Sesión no encontrada' });
     }
 
-    if (session.status !== 'authenticated') {
+    if (session.status !== 'authenticated' || !session.sock || !session.sock.user) {
+        logger.warn(`[${sessionId}] Intento de envío con sesión no autenticada o socket desconectado.`);
         return res.status(400).json({
-            error: 'La sesión no está autenticada',
+            error: 'La sesión no está autenticada o el socket no está conectado',
             status: session.status
         });
     }
 
-    const { numero, mensaje } = req.body;
+    let { numero, mensaje } = req.body;
     const archivo = req.file;
 
     if (!numero) {
         return res.status(400).json({ error: 'Falta el número de destino' });
     }
 
+    // Normalizar el número: quitar sufijos y asegurar formato correcto
+    numero = numero.replace(/@.*$/, ''); // Elimina cualquier sufijo como @c.us
+    const jid = `${numero}@s.whatsapp.net`;
+
     try {
         const sock = session.sock;
-        const jid = `${numero}@s.whatsapp.net`;
 
         if (archivo) {
             logger.info(`[${sessionId}] Recibido archivo: ${archivo.originalname}, tamaño: ${archivo.size}, tipo: ${archivo.mimetype}`);
@@ -635,7 +639,7 @@ app.post('/api/sessions/:id/send-message', upload.single('archivo'), async (req,
                 destinatario: numero
             });
         } else if (mensaje) {
-            logger.info(`[${sessionId}] Enviando mensaje de texto a ${numero}`);
+            logger.info(`[${sessionId}] Enviando mensaje de texto a ${jid}`);
             await sock.sendMessage(jid, { text: mensaje });
 
             return res.json({
@@ -648,9 +652,10 @@ app.post('/api/sessions/:id/send-message', upload.single('archivo'), async (req,
             return res.status(400).json({ error: 'Se requiere un mensaje o un archivo' });
         }
     } catch (err) {
-        logger.error(`[${sessionId}] Error al enviar el mensaje a ${numero}: ${err.message}`);
-        
-        if (err.message.includes('not-authorized') || err.message.includes('connection closed')) {
+        logger.error(`[${sessionId}] Error al enviar el mensaje a ${jid}: ${err.message}`);
+
+        // Si es error de conexión, sugerir reintento tras reconexión
+        if (err.message.includes('not-authorized') || err.message.includes('connection closed') || err.message.includes('Connection Closed') || err.message.includes('Timed Out')) {
             sessions.set(sessionId, {
                 ...session,
                 status: 'reconnecting',
@@ -659,7 +664,7 @@ app.post('/api/sessions/:id/send-message', upload.single('archivo'), async (req,
             saveSessionInfo();
 
             return res.status(503).json({
-                error: 'Error temporal en la sesión. Se ha iniciado recuperación automática.',
+                error: 'Error temporal en la sesión. Se ha iniciado recuperación automática. Por favor, reintente en unos segundos.',
                 sessionId,
                 status: 'recovering'
             });
@@ -1163,7 +1168,7 @@ app.post('/api/assign-number', (req, res) => {
         }
 
         const envKey = type === 'sells' ? 'SELLS_API_URL' : 'COORDINATION_API_URL';
-        const url = sessionId ? `https//whatsapp2.probusiness.pe/api/sessions/${sessionId}/send-message` : '';
+        const url = sessionId ? `https://whatsapp2.probusiness.pe/api/sessions/${sessionId}/send-message` : '';
         
         const success = updateLaravelEnv(envKey, url);
         
@@ -1175,6 +1180,7 @@ app.post('/api/assign-number', (req, res) => {
                 message: `Número ${sessionId ? 'asignado' : 'desasignado'} exitosamente`,
                 assignment: {
                     type: type,
+                    service: type === 'sells' ? 'ventas' : 'coordinacion', // <-- NUEVO CAMPO
                     sessionId: sessionId,
                     phoneNumber: session?.phoneNumber || null
                 }
