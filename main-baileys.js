@@ -255,7 +255,7 @@ const createBaileysClient = async (sessionId, isRestore = false) => {
         }
 
         if (connection === 'close') {
-            const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
+            const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== 401;
             logger.warn(`[${sessionId}] Conexión cerrada debido a ${lastDisconnect?.error}, reconectar: ${shouldReconnect}`);
 
             if (shouldReconnect) {
