@@ -11,6 +11,8 @@ const os = require('os');
 const cors = require('cors');
 const pino = require('pino');
 const crypto = require('crypto');
+const activeConnections = new Map(); // Track active connection attempts
+
 global.crypto = crypto;
 
 // 1. Configuración inicial
@@ -176,131 +178,177 @@ const saveSessionInfo = () => {
 
 // 4. Creación de cliente Baileys
 const createBaileysClient = async (sessionId, isRestore = false) => {
-    const sessionDir = path.join(__dirname, 'sessions', sessionId);
-    
-    // Crear directorio de sesión
-    await fs.ensureDir(sessionDir);
-    
-    // Obtener estado de autenticación
-    const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
-    
-    // Obtener versión más reciente de Baileys
-    const { version, isLatest } = await fetchLatestBaileysVersion();
-    logger.info(`[${sessionId}] Usando Baileys v${version.join('.')}, última versión: ${isLatest}`);
+    // Verificar si ya hay una conexión activa o en proceso
+    if (activeConnections.has(sessionId)) {
+        logger.warn(`[${sessionId}] Ya existe una conexión activa o en proceso, omitiendo...`);
+        return activeConnections.get(sessionId);
+    }
 
-    // Configurar socket
-    const sock = makeWASocket({
-        version,
-        logger: pino({ level: 'silent' }),
-        printQRInTerminal: false,
-        auth: state,
-        browser: ['WhatsApp Multi-Session', 'Chrome', '1.0.0'],
-        connectTimeoutMs: 60000,
-        defaultQueryTimeoutMs: 60000,
-        emitOwnEvents: false,
-        generateHighQualityLinkPreview: true,
-        getMessage: async (key) => {
-            return {
-                conversation: 'Hello'
-            };
-        },
-        // Configuraciones adicionales para compatibilidad
-        markOnlineOnConnect: false,
-        retryRequestDelayMs: 2000,
-        shouldIgnoreJid: jid => jid.includes('@broadcast'),
-        patchMessageBeforeSending: (msg) => {
-            const requiresPatch = !!(
-                msg.buttonsMessage 
-                || msg.templateMessage
-                || msg.listMessage
-            );
-            if (requiresPatch) {
-                msg = {
-                    viewOnceMessage: {
-                        message: {
-                            messageContextInfo: {
-                                deviceListMetadataVersion: 2,
-                                deviceListMetadata: {},
+    // Marcar como conexión en proceso
+    const connectionPromise = (async () => {
+        try {
+            const sessionDir = path.join(__dirname, 'sessions', sessionId);
+            
+            // Crear directorio de sesión
+            await fs.ensureDir(sessionDir);
+            
+            // Obtener estado de autenticación
+            const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
+            
+            // Obtener versión más reciente de Baileys
+            const { version, isLatest } = await fetchLatestBaileysVersion();
+            logger.info(`[${sessionId}] Usando Baileys v${version.join('.')}, última versión: ${isLatest}`);
+
+            // Configurar socket
+            const sock = makeWASocket({
+                version,
+                logger: pino({ level: 'silent' }),
+                printQRInTerminal: false,
+                auth: state,
+                browser: ['WhatsApp Multi-Session', 'Chrome', '1.0.0'],
+                connectTimeoutMs: 60000,
+                defaultQueryTimeoutMs: 60000,
+                emitOwnEvents: false,
+                generateHighQualityLinkPreview: true,
+                getMessage: async (key) => {
+                    return {
+                        conversation: 'Hello'
+                    };
+                },
+                // Configuraciones adicionales para compatibilidad
+                markOnlineOnConnect: false,
+                retryRequestDelayMs: 2000,
+                shouldIgnoreJid: jid => jid.includes('@broadcast'),
+                patchMessageBeforeSending: (msg) => {
+                    const requiresPatch = !!(
+                        msg.buttonsMessage 
+                        || msg.templateMessage
+                        || msg.listMessage
+                    );
+                    if (requiresPatch) {
+                        msg = {
+                            viewOnceMessage: {
+                                message: {
+                                    messageContextInfo: {
+                                        deviceListMetadataVersion: 2,
+                                        deviceListMetadata: {},
+                                    },
+                                    ...msg,
+                                },
                             },
-                            ...msg,
-                        },
-                    },
-                };
-            }
-            return msg;
-        }
-    });
-
-    // Conectar store
-    store.bind(sock.ev);
-
-    // Manejadores de eventos
-    sock.ev.on('connection.update', async (update) => {
-        const { connection, lastDisconnect, qr } = update;
-
-        if (qr) {
-            logger.info(`[${sessionId}] Nuevo QR generado`);
-            try {
-                const qrImage = await qrcode.toDataURL(qr, { width: 300, margin: 2 });
-                sessions.set(sessionId, {
-                    ...sessions.get(sessionId),
-                    qrData: { qr, qrImage },
-                    status: 'waiting_qr',
-                    lastActivity: Date.now()
-                });
-                saveSessionInfo();
-            } catch (err) {
-                logger.error(`[${sessionId}] Error generando QR: ${err.message}`);
-            }
-        }
-
-        if (connection === 'close') {
-            const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== 401;
-            logger.warn(`[${sessionId}] Conexión cerrada debido a ${lastDisconnect?.error}, reconectar: ${shouldReconnect}`);
-
-            if (shouldReconnect) {
-                sessions.set(sessionId, {
-                    ...sessions.get(sessionId),
-                    status: 'reconnecting',
-                    lastActivity: Date.now()
-                });
-                saveSessionInfo();
-                
-                // Reintentar conexión
-                setTimeout(() => {
-                    createBaileysClient(sessionId, true);
-                }, 5000);
-            } else {
-                sessions.set(sessionId, {
-                    ...sessions.get(sessionId),
-                    status: 'logged_out',
-                    lastActivity: Date.now()
-                });
-                saveSessionInfo();
-            }
-        } else if (connection === 'open') {
-            logger.info(`[${sessionId}] Conexión establecida`);
-            
-            // Obtener información del usuario
-            const user = sock.user;
-            const phoneNumber = user?.id?.split('@')[0];
-            
-            sessions.set(sessionId, {
-                ...sessions.get(sessionId),
-                status: 'authenticated',
-                qrData: null,
-                lastActivity: Date.now(),
-                phoneNumber: phoneNumber,
-                user: user
+                        };
+                    }
+                    return msg;
+                }
             });
-            saveSessionInfo();
+
+            // Conectar store
+            store.bind(sock.ev);
+
+            // Manejadores de eventos
+            sock.ev.on('connection.update', async (update) => {
+                const { connection, lastDisconnect, qr } = update;
+
+                if (qr) {
+                    logger.info(`[${sessionId}] Nuevo QR generado`);
+                    try {
+                        const qrImage = await qrcode.toDataURL(qr, { width: 300, margin: 2 });
+                        sessions.set(sessionId, {
+                            ...sessions.get(sessionId),
+                            qrData: { qr, qrImage },
+                            status: 'waiting_qr',
+                            lastActivity: Date.now()
+                        });
+                        saveSessionInfo();
+                    } catch (err) {
+                        logger.error(`[${sessionId}] Error generando QR: ${err.message}`);
+                    }
+                }
+
+                if (connection === 'close') {
+                    const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== 401;
+                    const errorMessage = lastDisconnect?.error?.message || 'Unknown error';
+                    
+                    // Limpiar conexión activa
+                    activeConnections.delete(sessionId);
+                    
+                    logger.warn(`[${sessionId}] Conexión cerrada: ${errorMessage}, reconectar: ${shouldReconnect}`);
+
+                    if (shouldReconnect && !errorMessage.includes('conflict')) {
+                        sessions.set(sessionId, {
+                            ...sessions.get(sessionId),
+                            status: 'reconnecting',
+                            lastActivity: Date.now()
+                        });
+                        saveSessionInfo();
+                        
+                        // Reintentar conexión después de un delay
+                        setTimeout(() => {
+                            createBaileysClient(sessionId, true);
+                        }, 5000);
+                    } else if (errorMessage.includes('conflict')) {
+                        // Si es un conflicto, esperar más tiempo antes de reintentar
+                        logger.warn(`[${sessionId}] Conflicto detectado, esperando 30 segundos antes de reintentar...`);
+                        sessions.set(sessionId, {
+                            ...sessions.get(sessionId),
+                            status: 'conflict_wait',
+                            lastActivity: Date.now()
+                        });
+                        saveSessionInfo();
+                        
+                        setTimeout(() => {
+                            activeConnections.delete(sessionId);
+                            createBaileysClient(sessionId, true);
+                        }, 30000);
+                    } else {
+                        sessions.set(sessionId, {
+                            ...sessions.get(sessionId),
+                            status: 'logged_out',
+                            lastActivity: Date.now()
+                        });
+                        saveSessionInfo();
+                    }
+                } else if (connection === 'open') {
+                    logger.info(`[${sessionId}] Conexión establecida exitosamente`);
+                    
+                    // Obtener información del usuario
+                    const user = sock.user;
+                    const phoneNumber = user?.id?.split('@')[0];
+                    
+                    sessions.set(sessionId, {
+                        ...sessions.get(sessionId),
+                        sock,
+                        status: 'authenticated',
+                        qrData: null,
+                        lastActivity: Date.now(),
+                        phoneNumber: phoneNumber,
+                        user: user
+                    });
+                    saveSessionInfo();
+                    
+                    // Mantener la referencia pero permitir nuevas conexiones si se necesitan
+                    setTimeout(() => {
+                        activeConnections.delete(sessionId);
+                    }, 5000);
+                }
+            });
+
+            sock.ev.on('creds.update', saveCreds);
+
+            return sock;
+        } catch (error) {
+            // En caso de error, limpiar la conexión activa
+            activeConnections.delete(sessionId);
+            throw error;
         }
-    });
+    })();
 
-    sock.ev.on('creds.update', saveCreds);
+    // Guardar la promesa de conexión
+    activeConnections.set(sessionId, connectionPromise);
 
-    return sock;
+    return connectionPromise;
 };
+
 
 // 5. Restaurar sesiones previas mejorado
 const restorePreviousSessions = async () => {
@@ -315,12 +363,8 @@ const restorePreviousSessions = async () => {
 
         // Filtrar sesiones que deben restaurarse
         const sessionsToRestore = sessionInfo.filter(info => {
-            // Restaurar sesiones autenticadas, reconectando, o que estaban en proceso
-            return info.status === 'authenticated' || 
-                   info.status === 'reconnecting' || 
-                   info.status === 'awaiting_restart' ||
-                   info.status === 'initializing' ||
-                   info.status === 'loading';
+            // Solo restaurar sesiones que estaban autenticadas
+            return info.status === 'authenticated';
         });
 
         if (sessionsToRestore.length === 0) {
@@ -330,88 +374,77 @@ const restorePreviousSessions = async () => {
 
         logger.info(`Restaurando ${sessionsToRestore.length} sesiones válidas...`);
 
-        // Restaurar sesiones de forma escalonada para evitar sobrecarga
+        // Restaurar sesiones de forma secuencial para evitar conflictos
         for (const [index, info] of sessionsToRestore.entries()) {
-            // --- NUEVO: Evitar restaurar la misma sesión en paralelo ---
+            // Verificar si ya existe una sesión activa
             const existing = sessions.get(info.sessionId);
-            if (existing && ['restoring', 'authenticated', 'reconnecting', 'initializing'].includes(existing.status)) {
-                logger.warn(`[${info.sessionId}] Ya existe una restauración o sesión activa en curso (estado: ${existing.status}), omitiendo restauración duplicada.`);
+            if (existing && ['authenticated', 'reconnecting', 'initializing', 'restoring'].includes(existing.status)) {
+                logger.warn(`[${info.sessionId}] Sesión ya activa (estado: ${existing.status}), omitiendo...`);
                 continue;
             }
-            // --- FIN NUEVO ---
-            logger.info(`[${info.sessionId}] Programando restauración (${index + 1}/${sessionsToRestore.length})`);
 
-            setTimeout(async () => {
-                try {
-                    logger.info(`[${info.sessionId}] Iniciando restauración...`);
-                    
-                    // Verificar si el directorio de sesión existe
-                    const sessionDir = path.join(__dirname, 'sessions', info.sessionId);
-                    if (!fs.existsSync(sessionDir)) {
-                        logger.warn(`[${info.sessionId}] Directorio de sesión no encontrado, omitiendo`);
-                        return;
-                    }
+            // Verificar si ya hay una conexión en proceso
+            if (activeConnections.has(info.sessionId)) {
+                logger.warn(`[${info.sessionId}] Conexión ya en proceso, omitiendo...`);
+                continue;
+            }
 
-                    const sock = await createBaileysClient(info.sessionId, true);
-                    
+            logger.info(`[${info.sessionId}] Iniciando restauración (${index + 1}/${sessionsToRestore.length})...`);
+
+            try {
+                // Verificar si el directorio de sesión existe
+                const sessionDir = path.join(__dirname, 'sessions', info.sessionId);
+                if (!fs.existsSync(sessionDir)) {
+                    logger.warn(`[${info.sessionId}] Directorio de sesión no encontrado, omitiendo`);
+                    continue;
+                }
+
+                // Marcar como en restauración
+                sessions.set(info.sessionId, {
+                    sock: null,
+                    status: 'restoring',
+                    lastActivity: Date.now(),
+                    phoneNumber: info.phoneNumber,
+                    user: info.infoData
+                });
+
+                const sock = await createBaileysClient(info.sessionId, true);
+                
+                // Solo actualizar si la conexión fue exitosa
+                if (sock) {
                     sessions.set(info.sessionId, {
                         sock,
                         status: 'restoring',
                         lastActivity: Date.now(),
                         phoneNumber: info.phoneNumber,
-                        user: info.infoData,
-                        restoreAttempt: (info.restoreAttempt || 0) + 1
+                        user: info.infoData
                     });
                     saveSessionInfo();
                     
                     logger.info(`[${info.sessionId}] Restauración iniciada exitosamente`);
-                } catch (error) {
-                    logger.error(`[${info.sessionId}] Error en restauración: ${error.message}`);
-                    
-                    // Configurar reintentos automáticos
-                    const currentSession = sessions.get(info.sessionId);
-                    const restoreAttempt = (currentSession?.restoreAttempt || 0) + 1;
-                    const maxRetries = 3;
-
-                    if (restoreAttempt < maxRetries) {
-                        logger.info(`[${info.sessionId}] Reintentando restauración (${restoreAttempt}/${maxRetries}) en 30 segundos...`);
-                        
-                        sessions.set(info.sessionId, {
-                            sock: null,
-                            status: 'retry_restore',
-                            lastActivity: Date.now(),
-                            phoneNumber: info.phoneNumber,
-                            user: info.infoData,
-                            restoreAttempt: restoreAttempt,
-                            lastError: error.message
-                        });
-                        saveSessionInfo();
-
-                        // Reintentar después de 30 segundos
-                        setTimeout(() => {
-                            restoreSessionWithRetry(info.sessionId, info);
-                        }, 30000);
-                    } else {
-                        logger.error(`[${info.sessionId}] Máximo de reintentos alcanzado, marcando como fallida`);
-                        sessions.set(info.sessionId, {
-                            sock: null,
-                            status: 'failed',
-                            lastActivity: Date.now(),
-                            phoneNumber: info.phoneNumber,
-                            user: info.infoData,
-                            restoreAttempt: restoreAttempt,
-                            lastError: error.message
-                        });
-                        saveSessionInfo();
-                    }
                 }
-            }, 5000 + (index * 3000)); // Más tiempo entre restauraciones
+                
+                // Esperar un poco entre restauraciones para evitar sobrecarga
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+            } catch (error) {
+                logger.error(`[${info.sessionId}] Error en restauración: ${error.message}`);
+                
+                sessions.set(info.sessionId, {
+                    sock: null,
+                    status: 'failed',
+                    lastActivity: Date.now(),
+                    phoneNumber: info.phoneNumber,
+                    user: info.infoData,
+                    lastError: error.message
+                });
+                saveSessionInfo();
+            }
         }
     } catch (error) {
         logger.error(`Error crítico restaurando sesiones: ${error.message}`);
     }
 };
-
 // Función auxiliar para reintentos de restauración
 const restoreSessionWithRetry = async (sessionId, sessionInfo) => {
     try {
@@ -479,105 +512,51 @@ const monitorAndRestoreSessions = async () => {
         const sessionTimeout = 5 * 60 * 1000; // 5 minutos sin actividad
 
         for (const [sessionId, session] of sessions.entries()) {
-            const inactiveTime = now - (session.lastActivity || 0);
-
-            // Forzar reconexión si la sesión lleva mucho tiempo inactiva
-            if (inactiveTime > forceReconnectTimeout) {
-                logger.warn(`[${sessionId}] Sesión inactiva por ${Math.floor(inactiveTime / 1000)}s, forzando reconexión...`);
-                try {
-                    if (session.sock) {
-                        await session.sock.logout().catch(() => {});
-                    }
-                    const newSock = await createBaileysClient(sessionId, true);
-                    sessions.set(sessionId, {
-                        sock: newSock,
-                        status: 'restoring',
-                        lastActivity: Date.now(),
-                        phoneNumber: session.phoneNumber,
-                        user: session.user
-                    });
-                    saveSessionInfo();
-                    logger.info(`[${sessionId}] Reconexión forzada exitosa`);
-                } catch (error) {
-                    logger.error(`[${sessionId}] Error en reconexión forzada: ${error.message}`);
-                }
+            // Skip si ya hay una conexión activa
+            if (activeConnections.has(sessionId)) {
+                logger.debug(`[${sessionId}] Conexión en proceso, omitiendo monitoreo`);
                 continue;
             }
 
-            // Verificar sesiones que han estado inactivas por mucho tiempo
-            if (session.lastActivity && (now - session.lastActivity) > sessionTimeout) {
-                logger.warn(`[${sessionId}] Sesión inactiva por ${Math.floor((now - session.lastActivity) / 1000)}s`);
+            const inactiveTime = now - (session.lastActivity || 0);
+
+            // Solo forzar reconexión si realmente es necesario
+            if (inactiveTime > forceReconnectTimeout && session.status === 'authenticated') {
+                logger.warn(`[${sessionId}] Sesión inactiva por ${Math.floor(inactiveTime / 1000)}s, verificando estado...`);
                 
-                // Si la sesión está autenticada pero inactiva, intentar reconectar
-                if (session.status === 'authenticated' && session.sock) {
-                    try {
-                        // Verificar si la conexión sigue activa
-                        const isConnected = session.sock.user && session.sock.user.id;
-                        if (!isConnected) {
-                            logger.warn(`[${sessionId}] Sesión desconectada detectada, iniciando reconexión...`);
-                            
-                            sessions.set(sessionId, {
-                                ...session,
-                                status: 'reconnecting',
-                                lastActivity: now
-                            });
-                            saveSessionInfo();
-
-                            // Intentar reconectar
-                            setTimeout(async () => {
-                                try {
-                                    const newSock = await createBaileysClient(sessionId, true);
-                                    sessions.set(sessionId, {
-                                        sock: newSock,
-                                        status: 'restoring',
-                                        lastActivity: Date.now(),
-                                        phoneNumber: session.phoneNumber,
-                                        user: session.user
-                                    });
-                                    saveSessionInfo();
-                                    logger.info(`[${sessionId}] Reconexión iniciada`);
-                                } catch (error) {
-                                    logger.error(`[${sessionId}] Error en reconexión automática: ${error.message}`);
-                                    sessions.set(sessionId, {
-                                        ...session,
-                                        status: 'failed',
-                                        lastActivity: Date.now(),
-                                        lastError: error.message
-                                    });
-                                    saveSessionInfo();
-                                }
-                            }, 5000);
-                        }
-                    } catch (error) {
-                        logger.error(`[${sessionId}] Error verificando conexión: ${error.message}`);
+                try {
+                    // Verificar si la conexión sigue activa
+                    if (session.sock && session.sock.user) {
+                        // Actualizar última actividad si la conexión está bien
+                        sessions.set(sessionId, {
+                            ...session,
+                            lastActivity: now
+                        });
+                        saveSessionInfo();
+                        continue;
                     }
-                }
-            }
-
-            // Verificar sesiones en estado de reintento que han estado así por mucho tiempo
-            if (session.status === 'retry_restore' && session.lastActivity) {
-                const retryTimeout = 10 * 60 * 1000; // 10 minutos
-                if ((now - session.lastActivity) > retryTimeout) {
-                    logger.warn(`[${sessionId}] Sesión en reintento por mucho tiempo, forzando nuevo intento...`);
                     
-                    // Forzar nuevo intento de restauración
-                    setTimeout(async () => {
-                        try {
-                            const newSock = await createBaileysClient(sessionId, true);
-                            sessions.set(sessionId, {
-                                sock: newSock,
-                                status: 'restoring',
-                                lastActivity: Date.now(),
-                                phoneNumber: session.phoneNumber,
-                                user: session.user,
-                                restoreAttempt: (session.restoreAttempt || 0) + 1
-                            });
-                            saveSessionInfo();
-                            logger.info(`[${sessionId}] Restauración forzada iniciada`);
-                        } catch (error) {
-                            logger.error(`[${sessionId}] Error en restauración forzada: ${error.message}`);
-                        }
-                    }, 10000);
+                    // Si no hay conexión, intentar reconectar
+                    logger.info(`[${sessionId}] Iniciando reconexión...`);
+                    
+                    if (session.sock) {
+                        await session.sock.logout().catch(() => {});
+                    }
+                    
+                    const newSock = await createBaileysClient(sessionId, true);
+                    if (newSock) {
+                        sessions.set(sessionId, {
+                            sock: newSock,
+                            status: 'restoring',
+                            lastActivity: Date.now(),
+                            phoneNumber: session.phoneNumber,
+                            user: session.user
+                        });
+                        saveSessionInfo();
+                        logger.info(`[${sessionId}] Reconexión iniciada`);
+                    }
+                } catch (error) {
+                    logger.error(`[${sessionId}] Error en reconexión: ${error.message}`);
                 }
             }
         }
@@ -585,6 +564,7 @@ const monitorAndRestoreSessions = async () => {
         logger.error(`Error en monitoreo automático: ${error.message}`);
     }
 };
+
 // --- FIN MEJORA 1 ---
 
 // 6. Endpoints
