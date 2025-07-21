@@ -792,7 +792,6 @@ class WhatsappWebSession {
                     handleSIGHUP: false
                 } : {})
             },
-            authTimeoutMs: 0,
             qrMaxRetries: 3,
             restartOnAuthFail: true,
             takeoverOnConflict: true
