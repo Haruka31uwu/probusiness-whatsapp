@@ -875,3 +875,11 @@ TROUBLESHOOTING: https://github.com/puppeteer/puppeteer/blob/main/docs/troublesh
 [2025-07-21T05:14:59.234Z] ERROR: [5135a34e-8720-4422-b809-22542f3662e9] Error cerrando sesión: Connection Closed
 [2025-07-21T05:14:59.235Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
 [2025-07-21T05:14:59.963Z] INFO: Proceso terminado correctamente
+[2025-07-21T06:18:55.981Z] INFO: Iniciando servidor con Baileys...
+[2025-07-21T06:18:55.983Z] INFO: Encontradas 0 sesiones para restaurar
+[2025-07-21T06:18:55.983Z] INFO: No hay sesiones válidas para restaurar
+[2025-07-21T06:18:55.986Z] INFO: Servidor escuchando en http://localhost:8083
+[2025-07-21T06:18:55.986Z] INFO: Modo Baileys: ACTIVADO
+[2025-07-21T06:23:56.003Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T06:28:56.011Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
+[2025-07-21T06:33:56.017Z] DEBUG: Información de sesiones guardada en C:\Users\User\OneDrive\Desktop\Proyectos\Probusiness\probusiness_whatsapp\session-info.json
