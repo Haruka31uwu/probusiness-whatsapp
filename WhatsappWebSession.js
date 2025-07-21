@@ -117,7 +117,7 @@ class WhatsappWebSession {
                     handleSIGTERM: false,
                     handleSIGHUP: false
                 } : {})
-            }
+            },
             
             // CONFIGURACIÓN CRÍTICA PARA ACELERAR AUTHENTICATED -> READY
             authTimeoutMs: 0,
@@ -831,61 +831,64 @@ class WhatsappWebSession {
                 dataPath: path.resolve(__dirname, `.wwebjs_auth`)
             }),
             puppeteer: {
-                args: [
-                    // SOLO LO ABSOLUTAMENTE ESENCIAL
+                ...(shouldUseSystemChrome ? { executablePath: chromeExecutable } : {}),
+                args: isLinux ? [
+                    // Seguridad básica para Linux
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
                     '--disable-dev-shm-usage',
+                    
+                    // Configuración de proceso
                     '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
+                    `--user-data-dir=${tempDir}`,
+                    
+                    // Optimizaciones esenciales
                     '--disable-extensions',
                     '--disable-plugins',
-                    '--disable-sync',
-                    '--disable-default-apps',
-                    '--disable-background-networking',
-                    '--disable-background-timer-throttling',
-                    '--disable-backgrounding-occluded-windows',
-                    '--disable-renderer-backgrounding',
-                    '--disable-features=TranslateUI',
-                    '--disable-ipc-flooding-protection',
-                    '--disable-component-extensions-with-background-pages',
-                    '--disable-domain-reliability',
-                    '--disable-client-side-phishing-detection',
-                    '--disable-hang-monitor',
-                    '--disable-prompt-on-repost',
-                    '--memory-pressure-off',
-                    '--max_old_space_size=256',
-                    '--aggressive-cache-discard',
                     '--disable-gpu',
-                    '--disable-software-rasterizer',
-                    '--force-device-scale-factor=1',
                     '--disable-web-security',
                     '--disable-logging',
+                    '--disable-default-apps',
+                    '--disable-sync',
+                    
+                    // Automatización
                     '--enable-automation',
                     '--disable-blink-features=AutomationControlled',
                     '--remote-debugging-port=0',
+                    
+                    // Memoria y rendimiento
+                    '--max_old_space_size=256',
+                    '--aggressive-cache-discard',
+                    '--memory-pressure-off',
+                    '--disk-cache-size=0',
+                    
+                    // Específico para WhatsApp (si es necesario)
+                    '--host-resolver-rules="MAP *.whatsapp.net 157.240.0.53"'
+                ] : [
+                    // Configuración básica para Windows/Mac
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
                     `--user-data-dir=${tempDir}`,
-                    ...(isLinux ? [
-                        '--disable-namespace-sandbox',
-                        '--disable-gpu-sandbox',
-                        '--disk-cache-size=0',
-                        '--media-cache-size=0',
-                        '--no-default-browser-check',
-                        '--disable-translate',
-                        '--password-store=basic',
-                        '--use-mock-keychain',
-                        '--disable-component-update',
-                        '--metrics-recording-only',
-                        '--force-color-profile=srgb'
-                    ] : [])
+                    '--disable-extensions',
+                    '--disable-web-security',
+                    '--enable-automation',
+                    '--disable-blink-features=AutomationControlled',
+                    '--remote-debugging-port=0',
+                    '--max_old_space_size=256'
                 ],
+                
                 headless: true,
-                timeout: 90000,
-                protocolTimeout: 120000,
+                timeout: 60000,
+                protocolTimeout: 75000,
                 defaultViewport: { width: 1280, height: 720 },
                 ignoreHTTPSErrors: true,
-                ignoreDefaultArgs: ['--disable-extensions', '--enable-automation'],
                 slowMo: 0,
                 devtools: false,
+                
+                // Configuración específica para Linux
                 ...(isLinux ? {
                     pipe: true,
                     dumpio: false,
