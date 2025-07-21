@@ -1221,7 +1221,7 @@ app.post('/api/sessions/:sessionId/assign-number', async (req, res) => {
         }
 
         // Actualizar archivo .env de Laravel
-        const envPath = path.join(__dirname, '..', '.env');
+        const envPath = path.join(__dirname, '..', '../redis-laravel/.env');
         if (fs.existsSync(envPath)) {
             let envContent = fs.readFileSync(envPath, 'utf8');
             
