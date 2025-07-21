@@ -471,7 +471,7 @@ class WhatsappSessionManager {
         // Pre-calentamiento de pool si hay pocas sesiones
         setTimeout(() => {
             this.warmupSessionPool();
-        }, 30000);
+        }, 10000);
     }
 
     /**
