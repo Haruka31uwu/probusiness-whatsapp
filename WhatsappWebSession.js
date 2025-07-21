@@ -54,143 +54,70 @@ class WhatsappWebSession {
             puppeteer: {
                 ...(shouldUseSystemChrome ? { executablePath: chromeExecutable } : {}),
                 args: isLinux ? [
-                    // CONFIGURACIÓN MÍNIMA PARA LINUX HEADLESS - SOLO LO ESENCIAL
+                    // Seguridad básica para Linux
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
                     '--disable-dev-shm-usage',
+                    
+                    // Configuración de proceso
                     '--no-first-run',
                     '--no-zygote',
                     '--single-process',
                     `--user-data-dir=${tempDir}`,
                     
-                    // OPTIMIZACIONES CRÍTICAS PARA VELOCIDAD
-                    '--disable-background-timer-throttling',
-                    '--disable-backgrounding-occluded-windows',
-                    '--disable-renderer-backgrounding',
-                    '--disable-ipc-flooding-protection',
-                    '--disable-component-extensions-with-background-pages',
-                    '--disable-background-networking',
-                    '--disable-features=TranslateUI',
+                    // Optimizaciones esenciales
                     '--disable-extensions',
                     '--disable-plugins',
-                    '--disable-sync',
-                    '--disable-default-apps',
-                    '--disable-domain-reliability',
-                    '--disable-client-side-phishing-detection',
-                    '--disable-hang-monitor',
-                    '--disable-prompt-on-repost',
-                    
-                    // MEMORIA OPTIMIZADA PARA HEADLESS
-                    '--memory-pressure-off',
-                    '--max_old_space_size=256',
-                    '--aggressive-cache-discard',
-                    
-                    // RENDERING MÍNIMO
                     '--disable-gpu',
-                    '--disable-software-rasterizer',
-                    '--force-device-scale-factor=1',
                     '--disable-web-security',
                     '--disable-logging',
+                    '--disable-default-apps',
+                    '--disable-sync',
                     
-                    // AUTOMATIZACIÓN - CONFIGURACIÓN ESTABLE PARA PREVENIR ERRORES DE PROTOCOLO
+                    // Automatización
                     '--enable-automation',
                     '--disable-blink-features=AutomationControlled',
                     '--remote-debugging-port=0',
-                    '--disable-background-media-suspend',
-                    '--disable-features=VizDisplayCompositor',
                     
-                    // CONFIGURACIONES ESPECÍFICAS PARA ESTABILIDAD DE PROTOCOLO
-                    '--disable-features=TranslateUI,BlinkGenPropertyTrees',
-                    '--disable-ipc-flooding-protection',
-                    '--disable-renderer-backgrounding',
-                    '--disable-background-timer-throttling',
-                    '--disable-backgrounding-occluded-windows',
-                    
-                    // LINUX HEADLESS ESPECÍFICO
-                    '--disable-namespace-sandbox',
-                    '--disable-gpu-sandbox',
-                    '--disk-cache-size=0',
-                    '--media-cache-size=0',
-                    '--disable-print-preview',
-                    '--no-default-browser-check',
-                    '--disable-translate',
-                    '--password-store=basic',
-                    '--use-mock-keychain',
-                    '--disable-component-update',
-                    '--metrics-recording-only',
-                    '--force-color-profile=srgb',
-                    
-                    // CONFIGURACIONES ADICIONALES PARA ESTABILIDAD
-                    '--disable-field-trial-config',
-                    '--disable-search-engine-choice-screen',
-                    '--disable-sync-preferences',
-                    '--disable-default-apps',
-                    '--disable-background-networking',
-                    '--disable-component-extensions-with-background-pages',
-                    '--disable-domain-reliability',
-                    '--disable-client-side-phishing-detection',
-                    '--disable-prompt-on-repost',
-                    '--disable-sync-preferences',
+                    // Memoria y rendimiento
+                    '--max_old_space_size=256',
                     '--aggressive-cache-discard',
-                    '--force-device-scale-factor=1',
+                    '--memory-pressure-off',
+                    '--disk-cache-size=0',
                     
-                    // CONFIGURACIONES DE RED Y DNS PARA ESTABILIDAD
-                    '--disable-features=VizDisplayCompositor',
-                    '--disable-background-media-suspend',
-                    '--disable-features=TranslateUI,BlinkGenPropertyTrees',
-                    '--disable-ipc-flooding-protection',
-                    '--disable-renderer-backgrounding',
-                    '--disable-background-timer-throttling',
-                    '--disable-backgrounding-occluded-windows',
-                    
-                    // CONFIGURACIONES ESPECÍFICAS PARA PROBLEMAS DE DNS
-                    '--host-resolver-rules="MAP *.whatsapp.net 157.240.0.53"',
-                    '--enable-tcp-fast-open',
-                    '--enable-simple-cache-backend',
-                    '--process-per-site'
+                    // Específico para WhatsApp (si es necesario)
+                    '--host-resolver-rules="MAP *.whatsapp.net 157.240.0.53"'
                 ] : [
-                    // CONFIGURACIÓN PARA WINDOWS/MAC (mantener original)
+                    // Configuración básica para Windows/Mac
                     '--no-first-run',
                     '--no-zygote',
                     '--single-process',
                     `--user-data-dir=${tempDir}`,
                     '--disable-extensions',
-                    '--no-default-browser-check',
                     '--disable-web-security',
                     '--enable-automation',
                     '--disable-blink-features=AutomationControlled',
                     '--remote-debugging-port=0',
-                    '--disable-default-apps',
-                    '--disable-sync',
-                    '--max_old_space_size=256',
-                    '--disable-background-networking',
-                    '--disable-component-extensions-with-background-pages',
-                    '--disable-domain-reliability',
-                    '--disable-client-side-phishing-detection',
-                    '--disable-prompt-on-repost',
-                    '--disable-sync-preferences',
-                    '--aggressive-cache-discard',
-                    '--force-device-scale-factor=1'
+                    '--max_old_space_size=256'
                 ],
+                
                 headless: true,
-                // TIMEOUTS OPTIMIZADOS PARA LINUX HEADLESS
-                timeout: isLinux ? 60000 : 60000,
-                protocolTimeout: isLinux ? 75000 : 75000,
+                timeout: 60000,
+                protocolTimeout: 75000,
                 defaultViewport: { width: 1280, height: 720 },
                 ignoreHTTPSErrors: true,
-                ignoreDefaultArgs: ['--disable-extensions', '--enable-automation'],
                 slowMo: 0,
                 devtools: false,
                 
-                // CONFIGURACIÓN ESPECÍFICA PARA LINUX HEADLESS
+                // Configuración específica para Linux
                 ...(isLinux ? {
-                    pipe: true, // Usar pipe en lugar de WebSocket (más rápido en headless)
+                    pipe: true,
                     dumpio: false,
                     handleSIGINT: false,
                     handleSIGTERM: false,
                     handleSIGHUP: false
                 } : {})
-            },
+            }
             
             // CONFIGURACIÓN CRÍTICA PARA ACELERAR AUTHENTICATED -> READY
             authTimeoutMs: 0,
@@ -981,16 +908,23 @@ class WhatsappWebSession {
         this.logger.info(`[${this.sessionId}] 🔄 Reiniciando sesión...`);
         
         try {
-            if (this.client) {
-                await this.client.destroy();
-            }
+            // Usar el método de destrucción completa
+            await this.destroySession();
+            
+            // Resetear contador de reintentos para el reinicio
+            this.retryCount = 0;
+            this.maxRetries = 3;
+            this.lastRetryTime = null;
+            
+            // Recrear cliente
+            this.initializeClient();
+            
+            // Reinicializar
+            return await this.initialize();
         } catch (error) {
-            this.logger.warn(`[${this.sessionId}] Error destruyendo cliente: ${error.message}`);
+            this.logger.error(`[${this.sessionId}] ❌ Error reiniciando sesión: ${error.message}`);
+            throw error;
         }
-        
-        await this.forceCleanup();
-        this.initializeClient();
-        return await this.initialize();
     }
 
     async forceCleanup() {
@@ -1016,6 +950,17 @@ class WhatsappWebSession {
                 });
             }
             
+            // ELIMINAR CARPETA DE AUTENTICACIÓN ESPECÍFICA DE LA SESIÓN
+            const authSessionDir = path.join(__dirname, `.wwebjs_auth/session-${this.sessionId}`);
+            if (fs.existsSync(authSessionDir)) {
+                try {
+                    fs.rmSync(authSessionDir, { recursive: true, force: true });
+                    this.logger.info(`[${this.sessionId}] ✅ Carpeta de autenticación eliminada: ${authSessionDir}`);
+                } catch (err) {
+                    this.logger.error(`[${this.sessionId}] ❌ Error eliminando carpeta de autenticación: ${err.message}`);
+                }
+            }
+            
             // Eliminar directorios temporales
             const tempDir = `/tmp/chrome-profile-${this.sessionId}`;
             if (fs.existsSync(tempDir)) {
@@ -1027,6 +972,17 @@ class WhatsappWebSession {
                 }
             }
             
+            // Eliminar también directorio temporal de fallback si existe
+            const tempDirMinimal = `/tmp/chrome-profile-${this.sessionId}-minimal`;
+            if (fs.existsSync(tempDirMinimal)) {
+                try {
+                    fs.rmSync(tempDirMinimal, { recursive: true, force: true });
+                    this.logger.debug(`[${this.sessionId}] Directorio temporal minimal eliminado`);
+                } catch (err) {
+                    this.logger.debug(`[${this.sessionId}] Error eliminando directorio minimal: ${err.message}`);
+                }
+            }
+            
             // Forzar garbage collection
             if (global.gc) {
                 global.gc();
@@ -1034,6 +990,102 @@ class WhatsappWebSession {
             
         } catch (error) {
             this.logger.error(`[${this.sessionId}] ❌ Error en limpieza forzada: ${error.message}`);
+        }
+    }
+
+    async destroySession() {
+        this.logger.info(`[${this.sessionId}] 🗑️ Destruyendo sesión completamente...`);
+        
+        try {
+            // 1. Destruir cliente
+            if (this.client) {
+                try {
+                    await this.client.destroy();
+                } catch (err) {
+                    this.logger.debug(`[${this.sessionId}] Error destruyendo cliente: ${err.message}`);
+                }
+            }
+            
+            // 2. Matar todos los procesos relacionados
+            const { exec } = require('child_process');
+            if (process.platform === 'win32') {
+                exec(`taskkill /F /IM chrome.exe /FI "WINDOWTITLE eq *${this.sessionId}*"`, () => {});
+            } else {
+                exec(`pkill -9 -f "chromium.*${this.sessionId}"`, () => {});
+                exec(`pkill -9 -f "chrome.*${this.sessionId}"`, () => {});
+            }
+            
+            // 3. ELIMINAR CARPETA DE AUTENTICACIÓN COMPLETA
+            const authSessionDir = path.join(__dirname, `.wwebjs_auth/session-${this.sessionId}`);
+            if (fs.existsSync(authSessionDir)) {
+                try {
+                    fs.rmSync(authSessionDir, { recursive: true, force: true });
+                    this.logger.info(`[${this.sessionId}] ✅ Carpeta de autenticación eliminada: ${authSessionDir}`);
+                } catch (err) {
+                    this.logger.error(`[${this.sessionId}] ❌ Error eliminando carpeta de autenticación: ${err.message}`);
+                }
+            }
+            
+            // 4. Eliminar directorios temporales
+            const tempDirs = [
+                `/tmp/chrome-profile-${this.sessionId}`,
+                `/tmp/chrome-profile-${this.sessionId}-minimal`,
+                `./temp-chrome-${this.sessionId}`,
+                `./temp-chrome-${this.sessionId}-minimal`
+            ];
+            
+            tempDirs.forEach(dir => {
+                if (fs.existsSync(dir)) {
+                    try {
+                        fs.rmSync(dir, { recursive: true, force: true });
+                        this.logger.debug(`[${this.sessionId}] Directorio eliminado: ${dir}`);
+                    } catch (err) {
+                        this.logger.debug(`[${this.sessionId}] Error eliminando ${dir}: ${err.message}`);
+                    }
+                }
+            });
+            
+            // 5. Limpiar archivos de bloqueo específicos
+            const lockFiles = [
+                path.join(__dirname, `.wwebjs_auth/session-${this.sessionId}/.lock`),
+                path.join(__dirname, `.wwebjs_auth/session-${this.sessionId}/.session`),
+                path.join(__dirname, `.wwebjs_auth/session-${this.sessionId}/.auth_info_baileys`)
+            ];
+            
+            lockFiles.forEach(file => {
+                if (fs.existsSync(file)) {
+                    try {
+                        fs.unlinkSync(file);
+                        this.logger.debug(`[${this.sessionId}] Archivo de bloqueo eliminado: ${file}`);
+                    } catch (err) {
+                        this.logger.debug(`[${this.sessionId}] Error eliminando archivo de bloqueo: ${err.message}`);
+                    }
+                }
+            });
+            
+            // 6. Resetear variables de estado
+            this.status = 'destroyed';
+            this.isReady = false;
+            this.qrData = null;
+            this.authenticatedAt = null;
+            this.readyAt = null;
+            this.authToReadyDuration = null;
+            this.retryCount = 0;
+            this.lastRetryTime = null;
+            this.phoneNumber = null;
+            this.lastActivity = Date.now();
+            
+            // 7. Forzar garbage collection
+            if (global.gc) {
+                global.gc();
+            }
+            
+            this.logger.info(`[${this.sessionId}] ✅ Sesión destruida completamente`);
+            return true;
+            
+        } catch (error) {
+            this.logger.error(`[${this.sessionId}] ❌ Error destruyendo sesión: ${error.message}`);
+            return false;
         }
     }
 
