@@ -8,6 +8,7 @@
     "dev": "nodemon main.js"
   },
   "dependencies": {
+    "@hapi/boom": "^10.0.1",
     "baileys": "^6.7.16",
     "cors": "^2.8.5",
     "express": "^4.21.2",

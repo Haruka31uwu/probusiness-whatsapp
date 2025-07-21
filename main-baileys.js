@@ -10,8 +10,6 @@ const { v4: uuidv4 } = require('uuid');
 const os = require('os');
 const cors = require('cors');
 const pino = require('pino');
-
-// Solucionar problema de crypto en Node.js
 const crypto = require('crypto');
 global.crypto = crypto;
 
