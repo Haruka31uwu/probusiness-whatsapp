@@ -122,8 +122,7 @@ class WhatsappWebSession {
             '--disable-web-security',
             '--disable-logging',
             '--enable-automation',
-            '--disable-blink-features=AutomationControlled',
-            '--remote-debugging-port=0'
+            '--disable-blink-features=AutomationControlled'
         ];
 
         if (isLinux) {
@@ -869,7 +868,6 @@ class WhatsappWebSession {
                     '--disable-dev-shm-usage',
                     '--no-first-run',
                     '--no-zygote',
-                    '--single-process',
                     `--user-data-dir=${tempDir}`,
                     '--disable-extensions',
                     '--disable-plugins',
@@ -896,7 +894,6 @@ class WhatsappWebSession {
                     '--disable-logging',
                     '--enable-automation',
                     '--disable-blink-features=AutomationControlled',
-                    '--remote-debugging-port=0',
                     // CONFIGURACIONES ESPECÍFICAS PARA Network.setUserAgentOverride
                     '--disable-features=VizDisplayCompositor,BlinkGenPropertyTrees,TranslateUI',
                     '--disable-background-media-suspend',
@@ -1237,4 +1234,4 @@ class WhatsappWebSession {
     }
 }
 
-module.exports = { WhatsappWebSession }; 
+module.exports = { WhatsappWebSession };
