@@ -57,7 +57,6 @@ const upload = multer({
 
 // 3. Almacenamiento de sesiones
 const sessions = new Map(); // { sessionId → { sock, qrData, status, lastActivity } }
-const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) });
 
 // Variables globales para asignaciones Laravel
 let laravelEnvPath = process.env.LARAVEL_ENV_PATH || '../redis-laravel/.env';
@@ -242,8 +241,7 @@ const createBaileysClient = async (sessionId, isRestore = false) => {
                 }
             });
 
-            // Conectar store
-            store.bind(sock.ev);
+  
 
             // Manejadores de eventos
             sock.ev.on('connection.update', async (update) => {
